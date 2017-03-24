@@ -47,7 +47,7 @@ export default class Dashboard extends PureComponent {
     )
     let navItems = [
       {
-        roles: ['Broadcaster', 'Ad Agency', 'Advertiser'],
+        roles: ['Broadcaster'],
         component: <ListItem
           key='0'
           component={NavigationLink}
@@ -62,32 +62,32 @@ export default class Dashboard extends PureComponent {
         component: <ListItem
           key='1'
           component={NavigationLink}
-          href='/release'
+          href='/inventory'
           leftIcon={<FontIcon>account_circle</FontIcon>}
           tileClassName='md-list-tile--mini'
-          primaryText={'Release Inventory'}
+          primaryText={'Inventory'}
         />,
       },
       {
-        roles: ['Ad Agency'],
+        roles: ['Broadcaster'],
         component: <ListItem
           key='2'
           component={NavigationLink}
-          href='/place'
+          href='/setupauth'
           leftIcon={<FontIcon>face</FontIcon>}
           tileClassName='md-list-tile--mini'
-          primaryText={'Place Order'}
+          primaryText={'Setup & Authenticate'}
         />,
       },
       {
-        roles: ['Ad Agency'],
+        roles: ['Broadcaster'],
         component: <ListItem
           key='3'
           component={NavigationLink}
-          href='/map'
+          href='/xyzview'
           leftIcon={<FontIcon>perm_contact_calendar</FontIcon>}
           tileClassName='md-list-tile--mini'
-          primaryText={'Ad-to-spot mapping'}
+          primaryText={'XYZ View'}
         />,
       },
       {
@@ -95,21 +95,21 @@ export default class Dashboard extends PureComponent {
         component: <ListItem
           key='4'
           component={NavigationLink}
-          href='/report'
+          href='/zyxview'
           leftIcon={<FontIcon>perm_identity</FontIcon>}
           tileClassName='md-list-tile--mini'
-          primaryText={'Report Aired Ads'}
+          primaryText={'ZYX View'}
         />,
       },
       {
-        roles: ['Broadcaster', 'Ad Agency', 'Advertiser'],
+        roles: ['Broadcaster'],
         component: <ListItem
           key='5'
           component={NavigationLink}
-          href='/trace'
+          href='/adduser'
           leftIcon={<FontIcon>record_voice_over</FontIcon>}
           tileClassName='md-list-tile--mini'
-          primaryText={'Trace Ads'}
+          primaryText={'Add User'}
         />,
       },
     ]
@@ -154,7 +154,7 @@ export default class Dashboard extends PureComponent {
         mobileDrawerType={NavigationDrawer.DrawerTypes.TEMPORARY_MINI}
         tabletDrawerType={NavigationDrawer.DrawerTypes.PERSISTENT_MINI}
         desktopDrawerType={NavigationDrawer.DrawerTypes.PERSISTENT_MINI}
-        toolbarTitle='Ad Sales dashboard'
+        toolbarTitle='BC Telco Dashboard'
         toolbarActions={closeButton}
       >
         {this.props.children}
