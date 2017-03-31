@@ -1,9 +1,7 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import Router from 'next/router'
-
 import { PureComponent } from 'react'
-
 import Avatar from 'react-md/lib/Avatars'
 import Button from 'react-md/lib/Buttons/Button'
 import FontIcon from 'react-md/lib/FontIcons'
@@ -31,7 +29,7 @@ export default class Dashboard extends PureComponent {
   constructor() {
     super()
     this.state = {
-      role: 'Broadcaster'
+      role: 'Telecommunications'
     }
   }
   render() {
@@ -47,7 +45,7 @@ export default class Dashboard extends PureComponent {
     )
     let navItems = [
       {
-        roles: ['Broadcaster'],
+        roles: ['Telecommunications','XYZ','ZYX'],
         component: <ListItem
           key='0'
           component={NavigationLink}
@@ -58,7 +56,7 @@ export default class Dashboard extends PureComponent {
         />,
       },
       {
-        roles: ['Broadcaster'],
+        roles: ['Telecommunications'],
         component: <ListItem
           key='1'
           component={NavigationLink}
@@ -69,7 +67,7 @@ export default class Dashboard extends PureComponent {
         />,
       },
       {
-        roles: ['Broadcaster'],
+        roles: ['Telecommunications'],
         component: <ListItem
           key='2'
           component={NavigationLink}
@@ -80,7 +78,7 @@ export default class Dashboard extends PureComponent {
         />,
       },
       {
-        roles: ['Broadcaster'],
+        roles: ['Telecommunications','XYZ'],
         component: <ListItem
           key='3'
           component={NavigationLink}
@@ -91,7 +89,7 @@ export default class Dashboard extends PureComponent {
         />,
       },
       {
-        roles: ['Broadcaster'],
+        roles: ['Telecommunications','ZYX'],
         component: <ListItem
           key='4'
           component={NavigationLink}
@@ -102,7 +100,7 @@ export default class Dashboard extends PureComponent {
         />,
       },
       {
-        roles: ['Broadcaster'],
+        roles: ['Telecommunications'],
         component: <ListItem
           key='5'
           component={NavigationLink}
@@ -141,7 +139,7 @@ export default class Dashboard extends PureComponent {
           <SelectField
             id='account-switcher'
             defaultValue={this.state.role}
-            menuItems={['Broadcaster', 'Ad Agency', 'Advertiser']}
+            menuItems={['Telecommunications','XYZ','ZYX']}
             key='account-switcher'
             position={SelectField.Positions.BELOW}
             className='md-select-field--toolbar'

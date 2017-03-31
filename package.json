@@ -1,5 +1,5 @@
 {
-  "name": "adsales-web",
+  "name": "bctelco-web",
   "version": "1.0.0",
   "scripts": {
     "dev": "next",
@@ -8,14 +8,19 @@
     "docker-start": "next build && next start"
   },
   "dependencies": {
+    "babel-loader": "^6.4.1",
     "next": "^2.0.0-beta",
+    "pui-react-iconography": "^8.0.4",
+    "pui-react-table": "^8.0.4",
     "react": "^15.4.2",
     "react-addons-css-transition-group": "^15.4.2",
     "react-addons-transition-group": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-mapbox-gl": "^1.4.0",
     "react-md": "^1.0.1",
-    "superagent": "^3.5.0"
+    "reactable": "^0.14.1",
+    "superagent": "^3.5.0",
+    "svg-react-loader": "^0.3.7"
   },
   "author": "IBM Global Solution Center",
   "license": "ISC",

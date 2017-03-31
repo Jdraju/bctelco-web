@@ -3,8 +3,8 @@ applications:
   memory: 512M
   instances: 1
   domain: mybluemix.net
-  name: gsc-adsales-web
-  host: gsc-adsales-web
+  name: gsc-bctelco-web
+  host: gsc-bctelco-web
   disk_quota: 1024M
   buildpack: https://github.com/heroku/heroku-buildpack-nodejs
 

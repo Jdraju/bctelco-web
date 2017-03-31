@@ -2,6 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Dashboard from '../components/Dashboard'
 import map from '../lib/map'
+import CTable from '../components/Tables'
+
 
 export default class Index extends React.Component {
   componentDidMount() {
@@ -9,14 +11,21 @@ export default class Index extends React.Component {
   }
 
   render() {
-    return <Dashboard>
+    return (<Dashboard>
       <div
         ref='map'
         style={{
-          width: '700px',
-          height: '400px',
-        }}
-      ></div>
-    </Dashboard>
-  }
+          width: '95%',
+          height: '350px',
+        }}>
+      </div>
+      <div
+        style={{
+          width: '95%',
+          borderStyle: 'solid',
+        }}>
+        <CTable/>
+        </div>
+    </Dashboard>)
+    }
 }
