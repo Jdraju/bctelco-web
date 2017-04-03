@@ -1,6 +1,11 @@
 import React, {Component } from 'react'
 import ReactDOM from 'react-dom';
-import {Table, TableHeader, TableRow, TableCell} from 'pui-react-table';
+//import {Table, TableHeader, TableRow, TableCell} from 'pui-react-table';
+import DataTable from 'react-md/lib/DataTables/DataTable';
+import TableHeader from 'react-md/lib/DataTables/TableHeader';
+import TableBody from 'react-md/lib/DataTables/TableBody';
+import TableRow from 'react-md/lib/DataTables/TableRow';
+import TableColumn from 'react-md/lib/DataTables/TableColumn';
 //import {Icon} from 'pui-react-iconography';
 //import {Table, Column, Cell} from 'fixed-data-table';
 
@@ -192,9 +197,50 @@ const data = [
 class Tables extends Component{
 
 render(){
-    
-    return <Table columns={columns} data={data} defaultSort='instances'/>
 
+    const rows = data.map((row, i) => (
+      <TableRow key={i}>
+        <TableColumn>{row.publicKey}</TableColumn>
+        <TableColumn>{row.msisdn}</TableColumn>
+        <TableColumn>{row.name}</TableColumn>
+        <TableColumn>{row.address}</TableColumn>
+        <TableColumn>{row.ho}</TableColumn>
+        <TableColumn>{row.rp}</TableColumn>
+        <TableColumn>{row.roaming}</TableColumn>
+        <TableColumn>{row.location}</TableColumn>
+        <TableColumn>{row.latitude}</TableColumn>
+        <TableColumn>{row.longitude}</TableColumn>
+        <TableColumn>{row.rateType}</TableColumn>
+        <TableColumn>{row.action}</TableColumn>
+        <TableColumn>{row.transactionType}</TableColumn>
+        <TableColumn>{row.destination}</TableColumn>
+        <TableColumn>{row.duration}</TableColumn>
+        <TableColumn>{row.charges}</TableColumn>
+        <TableColumn>{row.flag}</TableColumn>
+        <TableColumn>{row.timestamp}</TableColumn>
+
+        
+      </TableRow>
+    ));
+
+    const headers = columns.map((row, i) => (
+      
+        <TableColumn key={i}>{row.displayName}</TableColumn>
+
+    ));
+
+    return (
+      <DataTable plain>
+        <TableHeader>
+          <TableRow>
+            {headers}
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {rows}
+        </TableBody>
+      </DataTable>
+    )
     }
 }
 export default Tables

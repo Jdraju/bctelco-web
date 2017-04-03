@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import Dashboard from '../components/Dashboard'
 import map from '../lib/map'
 import CTable from '../components/Tables'
+import ABC from '../components/ABCView'
 
 
 export default class Index extends React.Component {
@@ -26,6 +27,9 @@ export default class Index extends React.Component {
         }}>
         <CTable/>
         </div>
+
+
+
     </Dashboard>)
     }
 }

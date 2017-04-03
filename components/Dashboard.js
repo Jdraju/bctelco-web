@@ -8,6 +8,8 @@ import FontIcon from 'react-md/lib/FontIcons'
 import ListItem from 'react-md/lib/Lists/ListItem'
 import NavigationDrawer from 'react-md/lib/NavigationDrawers'
 import SelectField from 'react-md/lib/SelectFields'
+import ABC from '../components/ABCView'
+import SkyLight from 'react-skylight';
 
 //const avatarSrc = 'https://cloud.githubusercontent.com/assets/13041/19686250/971bf7f8-9ac0-11e6-975c-188defd82df1.png'
 const avatarSrc = '/static/ibmlogo-grey-54x20.png'
@@ -32,6 +34,7 @@ export default class Dashboard extends PureComponent {
       role: 'Telecommunications'
     }
   }
+  
   render() {
     const closeButton = (
       <Button
@@ -41,11 +44,18 @@ export default class Dashboard extends PureComponent {
         tooltipPosition='left'
       >
         close
-      </Button>
+      </Button>,
+      <SkyLight dialogStyles = {{backgroundColor:'#0B8CC0',textColor:'#FFFFFF',width:'95%',height:'300px',left: '28%', top:'50%',zIndex:0, position:'fixed'}} hideOnOverlayClicked ref="ABCViewPop" title="ABC View">
+          <ABC/>
+        </SkyLight>,
+        <SkyLight dialogStyles = {{backgroundColor:'#0B8CC0',textColor:'#FFFFFF',width:'95%',height:'300px',left: '28%', top:'50%',zIndex:0, position:'fixed'}} hideOnOverlayClicked ref="XYZViewPop" title="XYZ View">
+          <ABC/>
+        </SkyLight>
     )
+    
     let navItems = [
       {
-        roles: ['Telecommunications','XYZ','ZYX'],
+        roles: ['Telecommunications','XYZ','ABC'],
         component: <ListItem
           key='0'
           component={NavigationLink}
@@ -78,27 +88,28 @@ export default class Dashboard extends PureComponent {
         />,
       },
       {
-        roles: ['Telecommunications','XYZ'],
+        roles: ['Telecommunications','ABC'],
         component: <ListItem
           key='3'
           component={NavigationLink}
-          href='/xyzview'
-          leftIcon={<FontIcon>perm_contact_calendar</FontIcon>}
+          leftIcon={<FontIcon>perm_identity</FontIcon>}
           tileClassName='md-list-tile--mini'
-          primaryText={'XYZ View'}
-        />,
+          primaryText={'ABC View'}
+          onClick={() => this.refs.ABCViewPop.show()}
+        />
       },
       {
-        roles: ['Telecommunications','ZYX'],
+        roles: ['Telecommunications','XYZ'],
         component: <ListItem
           key='4'
           component={NavigationLink}
-          href='/zyxview'
           leftIcon={<FontIcon>perm_identity</FontIcon>}
           tileClassName='md-list-tile--mini'
-          primaryText={'ZYX View'}
+          primaryText={'XYZ View'}
+          onClick={() => this.refs.XYZViewPop.show()}
         />,
       },
+      
       {
         roles: ['Telecommunications'],
         component: <ListItem
@@ -111,6 +122,7 @@ export default class Dashboard extends PureComponent {
         />,
       },
     ]
+    
 
     return <div>
       <Head>
@@ -139,7 +151,7 @@ export default class Dashboard extends PureComponent {
           <SelectField
             id='account-switcher'
             defaultValue={this.state.role}
-            menuItems={['Telecommunications','XYZ','ZYX']}
+            menuItems={['Telecommunications','XYZ','ABC']}
             key='account-switcher'
             position={SelectField.Positions.BELOW}
             className='md-select-field--toolbar'
