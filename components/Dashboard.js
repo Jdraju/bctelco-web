@@ -9,6 +9,7 @@ import ListItem from 'react-md/lib/Lists/ListItem'
 import NavigationDrawer from 'react-md/lib/NavigationDrawers'
 import SelectField from 'react-md/lib/SelectFields'
 import ABC from '../components/ABCView'
+import XYZ from '../components/XYZView'
 import SkyLight from 'react-skylight';
 
 //const avatarSrc = 'https://cloud.githubusercontent.com/assets/13041/19686250/971bf7f8-9ac0-11e6-975c-188defd82df1.png'
@@ -36,6 +37,11 @@ export default class Dashboard extends PureComponent {
   }
   
   render() {
+    let skyLightContent = <ABC/>
+    let xyztitle = "XYZ View"
+    let abctitle = "ABC View"
+    let skylightTitle = abctitle
+    
     const closeButton = (
       <Button
         icon
@@ -44,15 +50,10 @@ export default class Dashboard extends PureComponent {
         tooltipPosition='left'
       >
         close
-      </Button>,
-      <SkyLight dialogStyles = {{backgroundColor:'#0B8CC0',textColor:'#FFFFFF',width:'95%',height:'300px',left: '28%', top:'50%',zIndex:0, position:'fixed'}} hideOnOverlayClicked ref="ABCViewPop" title="ABC View">
-          <ABC/>
-        </SkyLight>,
-        <SkyLight dialogStyles = {{backgroundColor:'#0B8CC0',textColor:'#FFFFFF',width:'95%',height:'300px',left: '28%', top:'50%',zIndex:0, position:'fixed'}} hideOnOverlayClicked ref="XYZViewPop" title="XYZ View">
-          <ABC/>
-        </SkyLight>
+      </Button>
     )
-    
+       
+
     let navItems = [
       {
         roles: ['Telecommunications','XYZ','ABC'],
@@ -95,7 +96,12 @@ export default class Dashboard extends PureComponent {
           leftIcon={<FontIcon>perm_identity</FontIcon>}
           tileClassName='md-list-tile--mini'
           primaryText={'ABC View'}
-          onClick={() => this.refs.ABCViewPop.show()}
+          onClick={() => {
+            skylightTitle = abctitle
+            skyLightContent = <ABC/>
+            this.refs.ViewPop.show()
+            }
+            }
         />
       },
       {
@@ -106,7 +112,12 @@ export default class Dashboard extends PureComponent {
           leftIcon={<FontIcon>perm_identity</FontIcon>}
           tileClassName='md-list-tile--mini'
           primaryText={'XYZ View'}
-          onClick={() => this.refs.XYZViewPop.show()}
+          onClick={() => {
+            skylightTitle = xyztitle
+            skyLightContent = <XYZ/>
+            this.refs.ViewPop.show()
+            
+            }}
         />,
       },
       
@@ -125,6 +136,9 @@ export default class Dashboard extends PureComponent {
     
 
     return <div>
+      <SkyLight dialogStyles = {{backgroundColor:'#FFFFFF',width:'95%',height:'500px',left: '28%', top:'50%',zIndex:999, position:'fixed'}} hideOnOverlayClicked ref="ViewPop" title={skylightTitle}>
+        {skyLightContent}
+      </SkyLight>
       <Head>
         <link rel='stylesheet' href='/static/react-md.min.css' />
         <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500' />

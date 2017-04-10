@@ -3,8 +3,8 @@ import SkyLight from 'react-skylight';
 import CTable from './Tables'
 
 
-//ABC View Table
-class ABCView extends Component {
+//XYZ View Table
+class XYZview extends Component {
   constructor(props){
     super(props);
   }
@@ -23,6 +23,6 @@ class ABCView extends Component {
   }
 }
 
-ABCView.displayName = 'Example';
+XYZview.displayName = 'Example';
 
-export default ABCView;
+export default XYZview;

@@ -196,45 +196,47 @@ class Tables extends Component {
 
     render() {
 
-        const rows = data.map((row,i) => (<TableRow key = {i}>
-                <TableColumn>{row.publicKey}</TableColumn>
-                <TableColumn > { row.msisdn } </TableColumn> 
-                <TableColumn > { row.name } </TableColumn> 
-                <TableColumn > { row.address } </TableColumn> 
-                <TableColumn > { row.ho } </TableColumn> 
-                <TableColumn > { row.rp } </TableColumn> 
-                <TableColumn > { row.roaming } </TableColumn> 
-                <TableColumn > { row.location } </TableColumn> 
-                <TableColumn > { row.latitude } </TableColumn> 
-                <TableColumn > { row.longitude } </TableColumn> 
-                <TableColumn > { row.rateType } </TableColumn> 
-                <TableColumn > { row.action } </TableColumn> 
-                <TableColumn > { row.transactionType } </TableColumn>
-                <TableColumn > { row.destination } </TableColumn> 
-                <TableColumn > { row.duration } </TableColumn> 
-                <TableColumn > { row.charges } </TableColumn> 
-                <TableColumn > { row.flag } </TableColumn> 
-                <TableColumn > { row.timestamp } </TableColumn>
-            </TableRow>
+        const rows = data.map((row, i) => ( < TableRow key = { i } >
+            <
+            TableColumn > { row.publicKey } < /TableColumn> <
+            TableColumn > { row.msisdn } < /TableColumn>  <
+            TableColumn > { row.name } < /TableColumn>  <
+            TableColumn > { row.address } < /TableColumn>  <
+            TableColumn > { row.ho } < /TableColumn>  <
+            TableColumn > { row.rp } < /TableColumn>  <
+            TableColumn > { row.roaming } < /TableColumn>  <
+            TableColumn > { row.location } < /TableColumn>  <
+            TableColumn > { row.latitude } < /TableColumn>  <
+            TableColumn > { row.longitude } < /TableColumn>  <
+            TableColumn > { row.rateType } < /TableColumn>  <
+            TableColumn > { row.action } < /TableColumn>  <
+            TableColumn > { row.transactionType } < /TableColumn> <
+            TableColumn > { row.destination } < /TableColumn>  <
+            TableColumn > { row.duration } < /TableColumn>  <
+            TableColumn > { row.charges } < /TableColumn>  <
+            TableColumn > { row.flag } < /TableColumn>  <
+            TableColumn > { row.timestamp } < /TableColumn> <
+            /TableRow>
         ));
 
         const headers = columns.map((row, i) => (
 
-            <TableColumn key = { i } > { row.displayName } </TableColumn>
+            <
+            TableColumn key = { i } > { row.displayName } < /TableColumn>
 
         ));
 
-        return ( 
-        <DataTable plain >
-            <TableHeader >
-                <TableRow > 
-                    { headers }
-                </TableRow> 
-            </TableHeader> 
-            <TableBody > 
-                { rows } 
-            </TableBody> 
-        </DataTable>
+        return ( <
+            DataTable plain >
+            <
+            TableHeader >
+            <
+            TableRow > { headers } <
+            /TableRow>  <
+            /TableHeader>  <
+            TableBody > { rows } <
+            /TableBody>  <
+            /DataTable>
         )
     }
 }
