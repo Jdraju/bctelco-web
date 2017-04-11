@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import Router from 'next/router'
 import { PureComponent } from 'react'
+import { inject, observer } from 'mobx-react'
 import Avatar from 'react-md/lib/Avatars'
 import Button from 'react-md/lib/Buttons/Button'
 import FontIcon from 'react-md/lib/FontIcons'
@@ -28,6 +29,7 @@ class NavigationLink extends PureComponent {
   }
 }
 
+@inject('store') @observer
 export default class Dashboard extends PureComponent {
   constructor() {
     super()
@@ -71,7 +73,8 @@ export default class Dashboard extends PureComponent {
         component: <ListItem
           key='1'
           component={NavigationLink}
-          href='/inventory'
+          href='#'
+          onClick={this.props.store.inventory}
           leftIcon={<FontIcon>account_circle</FontIcon>}
           tileClassName='md-list-tile--mini'
           primaryText={'Inventory'}
@@ -82,7 +85,8 @@ export default class Dashboard extends PureComponent {
         component: <ListItem
           key='2'
           component={NavigationLink}
-          href='/setupauth'
+          href='#'
+          onClick={this.props.store.usecase1}
           leftIcon={<FontIcon>face</FontIcon>}
           tileClassName='md-list-tile--mini'
           primaryText={'Setup & Authenticate'}
@@ -132,6 +136,18 @@ export default class Dashboard extends PureComponent {
           primaryText={'Add User'}
         />,
       },
+      {
+        roles: ['Telecommunications'],
+        component: <ListItem
+          key='6'
+          component={NavigationLink}
+          href='#'
+          onClick={this.props.store.resetInventory}
+          leftIcon={<FontIcon>account_circle</FontIcon>}
+          tileClassName='md-list-tile--mini'
+          primaryText={'Reset Inventory'}
+        />,
+      }
     ]
     
 
