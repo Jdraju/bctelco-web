@@ -1,6 +1,7 @@
 import React, {Component } from 'react'
 import SkyLight from 'react-skylight';
-import CTable from './Tables'
+import CTable from './TablesXYZ'
+import CTableR from './TablesXYZroam'
 
 
 //XYZ View Table
@@ -17,7 +18,10 @@ class XYZview extends Component {
           width: '98%',
           borderStyle: 'solid',
         }}>
+        <h><b>Home Users</b></h>
         <CTable/>
+        <h><b>Roaming Users</b></h>
+        <CTableR/>
       </div>
     )
   }

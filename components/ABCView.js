@@ -1,6 +1,6 @@
 import React, {Component } from 'react'
 import SkyLight from 'react-skylight';
-import CTable from './Tables'
+import CTable from './TablesABC'
 
 
 //ABC View Table

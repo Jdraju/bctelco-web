@@ -31,18 +31,28 @@ class NavigationLink extends PureComponent {
 
 @inject('store') @observer
 export default class Dashboard extends PureComponent {
+ 
+   skyLightContent
+   xyztitle
+   abctitle
+   skylightTitle
+
   constructor() {
     super()
     this.state = {
       role: 'Telecommunications'
     }
+      this.skyLightContent = <ABC/>
+      this.xyztitle = "XYZ View"
+      this.abctitle = "ABC View"
+      this.skylightTitle = this.abctitle
   }
   
   render() {
-    let skyLightContent = <ABC/>
+   /* let skyLightContent = <ABC/>
     let xyztitle = "XYZ View"
     let abctitle = "ABC View"
-    let skylightTitle = abctitle
+    let skylightTitle = abctitle */
     
     const closeButton = (
       <Button
@@ -58,7 +68,7 @@ export default class Dashboard extends PureComponent {
 
     let navItems = [
       {
-        roles: ['Telecommunications','XYZ','ABC'],
+        roles: ['Telecommunications'],
         component: <ListItem
           key='0'
           component={NavigationLink}
@@ -89,20 +99,66 @@ export default class Dashboard extends PureComponent {
           onClick={this.props.store.usecase1}
           leftIcon={<FontIcon>face</FontIcon>}
           tileClassName='md-list-tile--mini'
-          primaryText={'Setup & Authenticate'}
+          primaryText={'Setup & Authenticate RS2'}
+        />,
+      },
+       {
+        roles: ['Telecommunications'],
+        component: <ListItem
+          key='2.1'
+          component={NavigationLink}
+          href='#'
+          onClick={this.props.store.usecase1_2}
+          leftIcon={<FontIcon>face</FontIcon>}
+          tileClassName='md-list-tile--mini'
+          primaryText={'Setup & Authenticate RS8'}
+        />,
+      },
+      {
+        roles: ['Telecommunications'],
+        component: <ListItem
+          key='3'
+          component={NavigationLink}
+          href='#'
+          onClick={this.props.store.usecase2_1}
+          leftIcon={<FontIcon>face</FontIcon>}
+          tileClassName='md-list-tile--mini'
+          primaryText={'Call Out'}
+        />,
+      },
+      {
+        roles: ['Telecommunications'],
+        component: <ListItem
+          key='4'
+          component={NavigationLink}
+          href='#'
+          onClick={this.props.store.usecase2_2}
+          leftIcon={<FontIcon>face</FontIcon>}
+          tileClassName='md-list-tile--mini'
+          primaryText={'Call End'}
+        />,
+      },
+      {
+        roles: ['Telecommunications'],
+        component: <ListItem
+          key='5'
+          component={NavigationLink}
+          href='#'
+          onClick={this.props.store.usecase3}
+          leftIcon={<FontIcon>face</FontIcon>}
+          tileClassName='md-list-tile--mini'
+          primaryText={'Overage'}
         />,
       },
       {
         roles: ['Telecommunications','ABC'],
         component: <ListItem
-          key='3'
+          key='6'
           component={NavigationLink}
           leftIcon={<FontIcon>perm_identity</FontIcon>}
           tileClassName='md-list-tile--mini'
           primaryText={'ABC View'}
           onClick={() => {
-            skylightTitle = abctitle
-            skyLightContent = <ABC/>
             this.refs.ViewPop.show()
             }
             }
@@ -111,15 +167,13 @@ export default class Dashboard extends PureComponent {
       {
         roles: ['Telecommunications','XYZ'],
         component: <ListItem
-          key='4'
+          key='7'
           component={NavigationLink}
           leftIcon={<FontIcon>perm_identity</FontIcon>}
           tileClassName='md-list-tile--mini'
           primaryText={'XYZ View'}
           onClick={() => {
-            skylightTitle = xyztitle
-            skyLightContent = <XYZ/>
-            this.refs.ViewPop.show()
+            this.refs.ViewPop2.show()
             
             }}
         />,
@@ -128,9 +182,10 @@ export default class Dashboard extends PureComponent {
       {
         roles: ['Telecommunications'],
         component: <ListItem
-          key='5'
+          key='8'
           component={NavigationLink}
-          href='/adduser'
+          href='#'
+          onClick={this.props.store.adduser}
           leftIcon={<FontIcon>record_voice_over</FontIcon>}
           tileClassName='md-list-tile--mini'
           primaryText={'Add User'}
@@ -139,7 +194,7 @@ export default class Dashboard extends PureComponent {
       {
         roles: ['Telecommunications'],
         component: <ListItem
-          key='6'
+          key='9'
           component={NavigationLink}
           href='#'
           onClick={this.props.store.resetInventory}
@@ -152,9 +207,12 @@ export default class Dashboard extends PureComponent {
     
 
     return <div>
-      <SkyLight dialogStyles = {{backgroundColor:'#FFFFFF',width:'95%',height:'500px',left: '28%', top:'50%',zIndex:999, position:'fixed'}} hideOnOverlayClicked ref="ViewPop" title={skylightTitle}>
-        {skyLightContent}
+      <SkyLight dialogStyles = {{backgroundColor:'#FFFFFF',width:'95%',height:'500px',left: '28%', top:'50%',zIndex:999, position:'fixed'}} hideOnOverlayClicked ref="ViewPop" title={this.abctitle}>
+        {<ABC/>}
       </SkyLight>
+      <SkyLight dialogStyles = {{backgroundColor:'#FFFFFF',width:'95%',height:'500px',left: '28%', top:'50%',zIndex:999, position:'fixed'}} hideOnOverlayClicked ref="ViewPop2" title={this.xyztitle}>
+        {<XYZ/>}
+        </SkyLight>
       <Head>
         <link rel='stylesheet' href='/static/react-md.min.css' />
         <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500' />

@@ -10,8 +10,13 @@ let store = null
 class Store {
   @observable light = false
   @observable username = 'Broadcaster'
-
+  @observable count
   @observable data=[]
+  @observable dataXYZ=[]
+  @observable dataABC=[]
+  @observable dataXYZroam=[]
+  @observable dataABCroam=[]
+  @observable rs=[]
   @observable lat1
   @observable long2
 
@@ -33,157 +38,63 @@ class Store {
       .post('//bctelco-api.mybluemix.net/delayFunc')
       .type('form')
       .send({})
+
+      this.rs=[]
+      this.rs[0]="rs1"
+      this.rs[1]="rs2"
+      this.rs[2]="rs3"
+      this.rs[3]="rs4"
+      this.rs[4]="rs5"
+      this.count=5
       this.inventory()
  }
    
   inventory=async()=>{
     this.data=[]
+    this.dataXYZ=[]
+    this.dataABC=[]
+    this.dataXYZroam=[]
+    this.dataABCroam=[]
+    let i=0
+    while(i<this.count)
+    {
     let summaries = await request
       .post('//bctelco-api.mybluemix.net/queryMSISDN')
       .type('form')
       .send({
-        data: JSON.stringify({key: 'rs1'}),
+        data: JSON.stringify({key:this.rs[i]}),
       })
      this.data = this.data.concat(JSON.parse(summaries.text));
-     summaries = await request
-      .post('//bctelco-api.mybluemix.net/queryMSISDN')
-      .type('form')
-      .send({
-        data: JSON.stringify({key: 'rs2'}),
-      })
-     this.data = this.data.concat(JSON.parse(summaries.text));
-     summaries = await request
-      .post('//bctelco-api.mybluemix.net/queryMSISDN')
-      .type('form')
-      .send({
-        data: JSON.stringify({key: 'rs3'}),
-      })
-     this.data = this.data.concat(JSON.parse(summaries.text));
-     summaries = await request
-      .post('//bctelco-api.mybluemix.net/queryMSISDN')
-      .type('form')
-      .send({
-        data: JSON.stringify({key: 'rs4'}),
-      })
-     this.data = this.data.concat(JSON.parse(summaries.text));
-     summaries = await request
-      .post('//bctelco-api.mybluemix.net/queryMSISDN')
-      .type('form')
-      .send({
-        data: JSON.stringify({key: 'rs5'}),
-      })
-     this.data = this.data.concat(JSON.parse(summaries.text));
+     if(JSON.parse(summaries.text).ho=="XYZ")
+     {
+       this.dataXYZ = this.dataXYZ.concat(JSON.parse(summaries.text));
+     }
+     if(JSON.parse(summaries.text).ho=="ABC")
+     {
+       this.dataABC = this.dataABC.concat(JSON.parse(summaries.text));
+     }
+     if(JSON.parse(summaries.text).rp=="XYZ")
+     {
+       this.dataXYZroam = this.dataXYZroam.concat(JSON.parse(summaries.text));
+     }
+      if(JSON.parse(summaries.text).rp=="ABC")
+     {
+       this.dataABCroam = this.dataABCroam.concat(JSON.parse(summaries.text));
+     }
 
-      /*this.data = [
-  {
-    publickey: 'rs1',
-    msisdn: '14691234567',
-    name:'A',
-    address:'DALLAS',
-    ho:'AT&T',
-    rp:'N/A',
-    roaming:'FALSE',
-    location:'Dallas, TX',
-    lat:'32.7749',
-    long:'-96.7970',
-    ratetype:'Local',
-    action:'N/A',
-    transtype:'N/A',
-    destination:'N/A',
-    duration:'N/A',
-    charges:'N/A',
-    flag:'N/A',
-    timestamp:'N/A',
-  },
-  {
-    publicKey: 'rs2',
-    msisdn: '14691234568',
-    name:'B',
-    address:'San Fransisco, CA',
-    ho:'xyz',
-    rp:'N/A',
-    roaming:'False',
-    location:'San Fransisco, CA',
-    latitude:'-122.414',
-    longitude:'37.776',
-    rateType:'Local',
-    action:'N/A',
-    transactionType:'N/A',
-    destination:'N/A',
-    duration:'N/A',
-    charges:'N/A',
-    flag:'N/A',
-    timestamp:'N/A',
-  },
-  {
-    publicKey: 'rs3',
-    msisdn: '14691234569',
-    name:'C',
-    address:'Washington DC',
-    ho:'xyz',
-    rp:'N/A',
-    roaming:'False',
-    location:'Washington DC',
-    latitude:'-96.7970',
-    longitude:'32.7749',
-    rateType:'Local',
-    action:'N/A',
-    transactionType:'N/A',
-    destination:'N/A',
-    duration:'N/A',
-    charges:'N/A',
-    flag:'N/A',
-    timestamp:'N/A',
-  },
-  {
-    publicKey: 'rs5',
-    msisdn: '349091234567',
-    name:'D',
-    address:'Barcelona, Spain',
-    ho:'zyx',
-    rp:'N/A',
-    roaming:'False',
-    location:'Barcelona, Spain',
-    latitude:'2.1734',
-    longitude:'41.3851',
-    rateType:'Local',
-    action:'N/A',
-    transactionType:'N/A',
-    destination:'N/A',
-    duration:'N/A',
-    charges:'N/A',
-    flag:'N/A',
-    timestamp:'N/A',
-  }] */
+     i=i+1
+      }
+    
+    }
 
-}
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
    usecase1=async()=>{
      this.data=[]
      this.lat1=2.1734
      this.long1=41.3851
      console.log("test1")
-     /*var geojson = {
-    "type": "FeatureCollection",
-    "features": [{
-        "type": "Feature",
-        "geometry": {
-            "type": "Point",
-            "coordinates": [this.lat1,this.long1]
-         }
-      }]
-     };
-    
-     map.setPointer(geojson)*/
-
-    /* setTimeout(()=>this.discoverRP(),1000)
-     setTimeout(()=>this.queryMS(),2000)
-     setTimeout(()=>this.authentication(),1000)
-     setTimeout(()=>this.queryMS(),2000)
-     setTimeout(()=>this.updateRates(),1000)
-     setTimeout(()=>this.queryMS(),2000)
-   */
-
+     
      this.data=this.data.concat({publickey: 'Block 1',msisdn: 'Discovery'});
      let discover= await request
       .post('//bctelco-api.mybluemix.net/discoverRP')
@@ -229,10 +140,223 @@ class Store {
         data: JSON.stringify({key: 'rs2'}),
       })
      this.data = this.data.concat(JSON.parse(summaries2.text));
-     this.data=this.data.concat({publickey: 'Block 3',msisdn: 'Register'});
 
+   if(JSON.parse(summaries2.text).flag!="Fraud")
+    {
+     this.data=this.data.concat({publickey: 'Block 3',msisdn: 'Register'});
+   
      let updateRates= await request
       .post('//bctelco-api.mybluemix.net/updateRates')
+      .type('form')
+      .send({
+        data: JSON.stringify({key: 'rs2'}),
+      })
+
+      let z = await request
+      .post('//bctelco-api.mybluemix.net/delayFunc')
+      .type('form')
+      .send({})
+
+      let summaries3 = await request
+      .post('//bctelco-api.mybluemix.net/queryMSISDN')
+      .type('form')
+      .send({
+        data: JSON.stringify({key: 'rs2'}),
+      })
+     this.data = this.data.concat(JSON.parse(summaries3.text));
+    }
+
+     this.data=this.data.concat({});
+
+      
+
+   }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+   usecase1_2=async()=>{
+     this.data=[]
+     this.lat1=2.1734
+     this.long1=41.3851
+     console.log("test1")
+     
+     this.data=this.data.concat({publickey: 'Block 1',msisdn: 'Discovery'});
+     let discover= await request
+      .post('//bctelco-api.mybluemix.net/discoverRP')
+      .type('form')
+      .send({
+        data: JSON.stringify({ key: "rs8",
+                sp: "XYZ",
+                loc: "Barcelona",
+                lat: "41.385064",
+                long: "2.173403"}),
+      })
+      console.log("test2", discover)
+      
+      let x = await request
+      .post('//bctelco-api.mybluemix.net/delayFunc')
+      .type('form')
+      .send({})
+
+      let summaries = await request
+      .post('//bctelco-api.mybluemix.net/queryMSISDN')
+      .type('form')
+      .send({
+        data: JSON.stringify({key: 'rs8'}),
+      })
+     this.data = this.data.concat(JSON.parse(summaries.text));
+     this.data=this.data.concat({publickey: 'Block 2',msisdn: 'Authentiation'});
+     let authenticate = await request
+      .post('//bctelco-api.mybluemix.net/authentication')
+      .type('form')
+      .send({
+        data: JSON.stringify({key: 'rs8'}),
+      })
+
+      let y = await request
+      .post('//bctelco-api.mybluemix.net/delayFunc')
+      .type('form')
+      .send({})
+
+     let summaries2 = await request
+      .post('//bctelco-api.mybluemix.net/queryMSISDN')
+      .type('form')
+      .send({
+        data: JSON.stringify({key: 'rs8'}),
+      })
+     this.data = this.data.concat(JSON.parse(summaries2.text));
+
+   if(JSON.parse(summaries2.text).flag!="Fraud")
+    {
+     this.data=this.data.concat({publickey: 'Block 3',msisdn: 'Register'});
+   
+     let updateRates= await request
+      .post('//bctelco-api.mybluemix.net/updateRates')
+      .type('form')
+      .send({
+        data: JSON.stringify({key: 'rs8'}),
+      })
+
+      let z = await request
+      .post('//bctelco-api.mybluemix.net/delayFunc')
+      .type('form')
+      .send({})
+
+      let summaries3 = await request
+      .post('//bctelco-api.mybluemix.net/queryMSISDN')
+      .type('form')
+      .send({
+        data: JSON.stringify({key: 'rs8'}),
+      })
+     this.data = this.data.concat(JSON.parse(summaries3.text));
+    }
+
+     this.data=this.data.concat({});
+
+      
+
+   }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+adduser=async()=>{
+     this.data=[]
+     console.log("test1")
+     this.data=this.data.concat({publickey: 'Block 1',msisdn: 'Add User'});
+     let add= await request
+      .post('//bctelco-api.mybluemix.net/enterData')
+      .type('form')
+      .send({
+        data: JSON.stringify({ key:"rs8",
+                msisdn:"14691234568", 
+                name:"A",
+                address:"DALLAS",
+                ho:"ABC",
+                lat:"32.942746",
+                long:"-96.994838"}),
+      })
+      console.log("test2", add)
+      
+      let x = await request
+      .post('//bctelco-api.mybluemix.net/delayFunc')
+      .type('form')
+      .send({})
+
+      let summaries = await request
+      .post('//bctelco-api.mybluemix.net/queryMSISDN')
+      .type('form')
+      .send({
+        data: JSON.stringify({key: 'rs8'}),
+      })
+     this.data = this.data.concat(JSON.parse(summaries.text));
+
+     this.rs[5]="rs8"
+     this.count=this.count+1
+
+   }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+   usecase2_1=async()=>{
+     this.data=[]
+     console.log("test1")
+     
+     this.data=this.data.concat({publickey: 'Block 1',msisdn: 'CallOut'});
+     let callout= await request
+      .post('//bctelco-api.mybluemix.net/CallOut')
+      .type('form')
+      .send({
+        data: JSON.stringify({ key: "rs2",
+                sp: "XYZ",
+                destmsisdn: "14691234569"}),
+      })
+      console.log("test2", callout)
+      
+      let x = await request
+      .post('//bctelco-api.mybluemix.net/delayFunc')
+      .type('form')
+      .send({})
+
+      let summaries = await request
+      .post('//bctelco-api.mybluemix.net/queryMSISDN')
+      .type('form')
+      .send({
+        data: JSON.stringify({key: 'rs2'}),
+      })
+     this.data = this.data.concat(JSON.parse(summaries.text));
+
+   }
+
+   usecase2_2=async()=>{
+
+     this.data=this.data.concat({publickey: 'Block 2',msisdn: 'Call End'});
+     let callend = await request
+      .post('//bctelco-api.mybluemix.net/CallEnd')
+      .type('form')
+      .send({
+        data: JSON.stringify({key: 'rs2'}),
+      })
+
+      let y = await request
+      .post('//bctelco-api.mybluemix.net/delayFunc')
+      .type('form')
+      .send({})
+
+     let summaries2 = await request
+      .post('//bctelco-api.mybluemix.net/queryMSISDN')
+      .type('form')
+      .send({
+        data: JSON.stringify({key: 'rs2'}),
+      })
+     this.data = this.data.concat(JSON.parse(summaries2.text));
+     
+     this.data=this.data.concat({publickey: 'Block 3',msisdn: 'Call Charges'});
+
+     let callpay= await request
+      .post('//bctelco-api.mybluemix.net/CallPay')
       .type('form')
       .send({
         data: JSON.stringify({key: 'rs2'}),
@@ -256,6 +380,79 @@ class Store {
 
    }
 
+
+   usecase3=async()=>{
+
+     this.data=this.data.concat({publickey: 'Block 2',msisdn: 'Overage Check'});
+     let overage = await request
+      .post('//bctelco-api.mybluemix.net/Overage')
+      .type('form')
+      .send({
+        data: JSON.stringify({key: 'rs2'}),
+      })
+
+      let x = await request
+      .post('//bctelco-api.mybluemix.net/delayFunc')
+      .type('form')
+      .send({})
+
+     let summaries2 = await request
+      .post('//bctelco-api.mybluemix.net/queryMSISDN')
+      .type('form')
+      .send({
+        data: JSON.stringify({key: 'rs2'}),
+      })
+     this.data = this.data.concat(JSON.parse(summaries2.text));
+
+     this.data=this.data.concat({publickey: 'Block 3',msisdn: 'Call End'});
+     let callend = await request
+      .post('//bctelco-api.mybluemix.net/CallEnd')
+      .type('form')
+      .send({
+        data: JSON.stringify({key: 'rs2'}),
+      })
+
+      let y = await request
+      .post('//bctelco-api.mybluemix.net/delayFunc')
+      .type('form')
+      .send({})
+
+     let summaries3 = await request
+      .post('//bctelco-api.mybluemix.net/queryMSISDN')
+      .type('form')
+      .send({
+        data: JSON.stringify({key: 'rs2'}),
+      })
+     this.data = this.data.concat(JSON.parse(summaries2.text));
+     
+     this.data=this.data.concat({publickey: 'Block 4',msisdn: 'Call Charges'});
+
+     let callpay= await request
+      .post('//bctelco-api.mybluemix.net/CallPay')
+      .type('form')
+      .send({
+        data: JSON.stringify({key: 'rs2'}),
+      })
+
+      let z = await request
+      .post('//bctelco-api.mybluemix.net/delayFunc')
+      .type('form')
+      .send({})
+
+      let summaries4 = await request
+      .post('//bctelco-api.mybluemix.net/queryMSISDN')
+      .type('form')
+      .send({
+        data: JSON.stringify({key: 'rs2'}),
+      })
+     this.data = this.data.concat(JSON.parse(summaries3.text));
+     this.data=this.data.concat({});
+
+      
+
+   }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
    discoverRP=async()=>{
    // alert("called")
@@ -311,10 +508,15 @@ class Store {
 
   
   constructor (isServer) {
-
   this.inventory()
   this.lat1=-96.7970
   this.long1=32.7749
+  this.rs[0]="rs1"
+  this.rs[1]="rs2"
+  this.rs[2]="rs3"
+  this.rs[3]="rs4"
+  this.rs[4]="rs5"
+  this.count=5
 
   }
 
