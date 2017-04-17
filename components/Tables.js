@@ -113,6 +113,7 @@ const columns = [
 
 
 
+
 @inject('store') @observer
 export default class Tables extends Component{
 

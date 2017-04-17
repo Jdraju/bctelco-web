@@ -15,8 +15,7 @@ class XYZview extends Component {
     return (
       <div
         style={{
-          width: '98%',
-          borderStyle: 'solid',
+          width: '98%'
         }}>
         <h><b>Home Users</b></h>
         <CTable/>
