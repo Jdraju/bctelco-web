@@ -149,7 +149,7 @@ render(){
         <TableColumn>{row.duration}</TableColumn>
         <TableColumn>{row.charges}</TableColumn>
         <TableColumn>{row.flag}</TableColumn>
-        <TableColumn>{row.timestamp}</TableColumn>
+        <TableColumn>{row.time}</TableColumn>
 
         
       </TableRow>

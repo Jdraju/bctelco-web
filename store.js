@@ -17,12 +17,31 @@ class Store {
   @observable dataXYZroam=[]
   @observable dataABCroam=[]
   @observable rs=[]
-  @observable lat1
-  @observable long2
+  @observable mappt
+  @observable maptrgt
+  @observable mapptcolor1
+  @observable mapptcolor2
+  @observable mapptcolor1_1
+  @observable mapptcolor2_1
+  @observable lat1=0.0
+  @observable long1=0.0
+  @observable lat8
+  @observable long8
+  
 
   
-  
+  amantest=(rs,lng,lt)=>{
+   alert(rs+" "+lng+" Aman "+lt);
+  }
 
+  focusrs2=()=>{
+    this.mappt='point'
+    this.maptrgt='rs2'
+  }
+  focusrs8=()=>{
+    this.mappt='point2'
+    this.maptrgt='rs8'
+  }
   
  resetInventory=async()=>{
     var d = [{}]
@@ -32,8 +51,8 @@ class Store {
       .send({
         data:JSON.stringify(d),
       })
-      this.lat1=-96.7970
-      this.long1=32.7749
+      this.lat1=0.0
+      this.long1=0.0
       let x = await request
       .post('//bctelco-api.mybluemix.net/delayFunc')
       .type('form')
@@ -89,22 +108,29 @@ class Store {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-   usecase1=async()=>{
+   usecase1=async(rs,lt,lng)=>{
      this.data=[]
-     this.lat1=2.1734
-     this.long1=41.3851
+     this.lat1=Math.round(lt * 100) / 100
+     this.long1=Math.round(lng * 100) / 100
      console.log("test1")
-     
+     let loc=""
+     let rp=""
+     if(rs=="rs2")
+       { loc="BARCELONA"
+        rp="XYZ"}
+     else
+       { loc="DALLAS"
+        rp="ABC"}
      this.data=this.data.concat({publickey: 'Block 1',msisdn: 'Discovery'});
      let discover= await request
       .post('//bctelco-api.mybluemix.net/discoverRP')
       .type('form')
       .send({
-        data: JSON.stringify({ key: "rs2",
-                sp: "XYZ",
-                loc: "Barcelona",
-                lat: "41.385064",
-                long: "2.173403"}),
+        data: JSON.stringify({ key: rs,
+                sp: rp,
+                loc: loc,
+                lat: this.lat1.toString(),
+                long: this.long1.toString()}),
       })
       console.log("test2", discover)
       
@@ -117,7 +143,7 @@ class Store {
       .post('//bctelco-api.mybluemix.net/queryMSISDN')
       .type('form')
       .send({
-        data: JSON.stringify({key: 'rs2'}),
+        data: JSON.stringify({key: rs}),
       })
      this.data = this.data.concat(JSON.parse(summaries.text));
      this.data=this.data.concat({publickey: 'Block 2',msisdn: 'Authentiation'});
@@ -125,7 +151,7 @@ class Store {
       .post('//bctelco-api.mybluemix.net/authentication')
       .type('form')
       .send({
-        data: JSON.stringify({key: 'rs2'}),
+        data: JSON.stringify({key: rs}),
       })
 
       let y = await request
@@ -137,7 +163,7 @@ class Store {
       .post('//bctelco-api.mybluemix.net/queryMSISDN')
       .type('form')
       .send({
-        data: JSON.stringify({key: 'rs2'}),
+        data: JSON.stringify({key: rs}),
       })
      this.data = this.data.concat(JSON.parse(summaries2.text));
 
@@ -149,7 +175,7 @@ class Store {
       .post('//bctelco-api.mybluemix.net/updateRates')
       .type('form')
       .send({
-        data: JSON.stringify({key: 'rs2'}),
+        data: JSON.stringify({key: rs}),
       })
 
       let z = await request
@@ -161,9 +187,13 @@ class Store {
       .post('//bctelco-api.mybluemix.net/queryMSISDN')
       .type('form')
       .send({
-        data: JSON.stringify({key: 'rs2'}),
+        data: JSON.stringify({key: rs}),
       })
      this.data = this.data.concat(JSON.parse(summaries3.text));
+    }
+    else{
+       this.mapptcolor2='#b30000'
+       this.mapptcolor2_1='#ff1a1a'
     }
 
      this.data=this.data.concat({});
@@ -295,13 +325,19 @@ adduser=async()=>{
 
      this.rs[5]="rs8"
      this.count=this.count+1
+      this.mapptcolor2='#3887be'
+      this.mapptcolor2_1='#3bb2d0'
+      this.lat8=-96.7970
+      this.long8=32.7767
 
    }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
-
+   
    usecase2_1=async()=>{
+     //alert("aman")
      this.data=[]
+     //alert("aman2")
      console.log("test1")
      
      this.data=this.data.concat({publickey: 'Block 1',msisdn: 'CallOut'});
@@ -510,13 +546,22 @@ adduser=async()=>{
   constructor (isServer) {
   this.inventory()
   this.lat1=-96.7970
-  this.long1=32.7749
+  this.long1=32.7767
+  this.lat8=-98
+  this.long8=30
   this.rs[0]="rs1"
   this.rs[1]="rs2"
   this.rs[2]="rs3"
   this.rs[3]="rs4"
   this.rs[4]="rs5"
   this.count=5
+  this.mappt='point'
+  this.maptrgt='rs2'
+  this.mapptcolor1_1='#3bb2d0'
+  this.mapptcolor1='#3887be'
+  this.mapptcolor2='#333333'
+  this.mapptcolor2_1='#333333'
+
 
   }
 

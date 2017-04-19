@@ -129,7 +129,6 @@ export default class Tables extends Component{
 
 render(){
     //const {store} = this.props.store
-  
     const rows = this.props.store.dataABC.map((row, i) => (
       <TableRow key={i}>
         <TableColumn>{row.publickey}</TableColumn>
@@ -149,7 +148,7 @@ render(){
         <TableColumn>{row.duration}</TableColumn>
         <TableColumn>{row.charges}</TableColumn>
         <TableColumn>{row.flag}</TableColumn>
-        <TableColumn>{row.timestamp}</TableColumn>
+        <TableColumn>{row.time}</TableColumn>
 
         
       </TableRow>

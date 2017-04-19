@@ -96,10 +96,10 @@ export default class Dashboard extends PureComponent {
           key='2'
           component={NavigationLink}
           href='#'
-          onClick={this.props.store.usecase1}
+          onClick={this.props.store.focusrs2}
           leftIcon={<FontIcon>face</FontIcon>}
           tileClassName='md-list-tile--mini'
-          primaryText={'Setup & Authenticate RS2'}
+          primaryText={'Focus RS2'}
         />,
       },
        {
@@ -108,10 +108,10 @@ export default class Dashboard extends PureComponent {
           key='2.1'
           component={NavigationLink}
           href='#'
-          onClick={this.props.store.usecase1_2}
+          onClick={this.props.store.focusrs8}
           leftIcon={<FontIcon>face</FontIcon>}
           tileClassName='md-list-tile--mini'
-          primaryText={'Setup & Authenticate RS8'}
+          primaryText={'Focus RS8'}
         />,
       },
       {

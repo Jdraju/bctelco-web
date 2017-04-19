@@ -1,6 +1,7 @@
 import React, {Component } from 'react'
 import SkyLight from 'react-skylight';
 import CTable from './TablesABC'
+import CTableR from './TablesABCroam'
 
 
 //ABC View Table
@@ -16,7 +17,10 @@ class ABCView extends Component {
         style={{
           width: '98%'
         }}>
+        <h><b>Home Users</b></h>
         <CTable/>
+        <h><b>Roaming Users</b></h>
+        <CTableR/>
       </div>
     )
   }
