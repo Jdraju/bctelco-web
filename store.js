@@ -27,12 +27,24 @@ class Store {
   @observable long1=0.0
   @observable lat8
   @observable long8
+  @observable rs2screen
   
 
   
   amantest=(rs,lng,lt)=>{
    alert(rs+" "+lng+" Aman "+lt);
+     this.rs2screen='<button onclick="test()">Register</button>'
   }
+
+   amantest2=()=>{
+
+       this.rs2screen='<button> Call In Aman</button><button>Call Out</button><p>MSIDN:1469xxxxxxx8</p>'
+  }
+
+  setupcall=()=>{
+
+   store.usecase1(store.maptrgt,store.lat1,store.long1)
+}
 
   focusrs2=()=>{
     this.mappt='point'
@@ -120,7 +132,7 @@ class Store {
         rp="XYZ"}
      else
        { loc="DALLAS"
-        rp="ABC"}
+         rp=""}
      this.data=this.data.concat({publickey: 'Block 1',msisdn: 'Discovery'});
      let discover= await request
       .post('//bctelco-api.mybluemix.net/discoverRP')
@@ -561,7 +573,7 @@ adduser=async()=>{
   this.mapptcolor1='#3887be'
   this.mapptcolor2='#333333'
   this.mapptcolor2_1='#333333'
-
+  this.rs2screen='<button> Call In</button><button>Call Out</button><p>MSIDN:1469xxxxxxx8</p>'
 
   }
 
