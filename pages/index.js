@@ -41,6 +41,45 @@ export default class Index extends React.Component {
           width: '98%',
           height: '350px'
         }}>
+          <div 
+           style = {{
+             position: 'absolute',
+             zIndex:'2',
+             color: '#fff',
+             width: '30px',
+             top: '0',
+             left: '0',
+             padding: '10px',
+             height: '200px',
+             lineheight: '200px',
+             textalign: 'center'
+           }}>
+           <span id='rsselect'></span>
+            <div >
+        <fieldset>
+            <div id='swatches'></div>
+        </fieldset>
+        </div>
+
+        <div 
+           style = {{
+             position: 'absolute',
+             zIndex:'2',
+             color: '#fff',
+             width: '30px',
+             top: '210px',
+             left: '0',
+             marginTop:'10px',
+             padding: '10px',
+             height: '200px',
+             lineheight: '200px',
+             textalign: 'center'
+           }}>
+           <button id="addrs">Add User</button>
+           </div>
+
+           </div>
+
           <pre id='coordinates' class='coordinates' 
             style={{
               position:'absolute', bottom: '20px',

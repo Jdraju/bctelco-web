@@ -91,66 +91,6 @@ export default class Dashboard extends PureComponent {
         />,
       },
       {
-        roles: ['Telecommunications'],
-        component: <ListItem
-          key='2'
-          component={NavigationLink}
-          href='#'
-          onClick={this.props.store.focusrs2}
-          leftIcon={<FontIcon>face</FontIcon>}
-          tileClassName='md-list-tile--mini'
-          primaryText={'Focus RS2'}
-        />,
-      },
-       {
-        roles: ['Telecommunications'],
-        component: <ListItem
-          key='2.1'
-          component={NavigationLink}
-          href='#'
-          onClick={this.props.store.focusrs8}
-          leftIcon={<FontIcon>face</FontIcon>}
-          tileClassName='md-list-tile--mini'
-          primaryText={'Focus RS8'}
-        />,
-      },
-      {
-        roles: ['Telecommunications'],
-        component: <ListItem
-          key='3'
-          component={NavigationLink}
-          href='#'
-          onClick={this.props.store.usecase2_1}
-          leftIcon={<FontIcon>face</FontIcon>}
-          tileClassName='md-list-tile--mini'
-          primaryText={'Call Out'}
-        />,
-      },
-      {
-        roles: ['Telecommunications'],
-        component: <ListItem
-          key='4'
-          component={NavigationLink}
-          href='#'
-          onClick={this.props.store.usecase2_2}
-          leftIcon={<FontIcon>face</FontIcon>}
-          tileClassName='md-list-tile--mini'
-          primaryText={'Call End'}
-        />,
-      },
-      {
-        roles: ['Telecommunications'],
-        component: <ListItem
-          key='5'
-          component={NavigationLink}
-          href='#'
-          onClick={this.props.store.usecase3}
-          leftIcon={<FontIcon>face</FontIcon>}
-          tileClassName='md-list-tile--mini'
-          primaryText={'Overage'}
-        />,
-      },
-      {
         roles: ['Telecommunications','ABC'],
         component: <ListItem
           key='6'
@@ -176,19 +116,6 @@ export default class Dashboard extends PureComponent {
             this.refs.ViewPop2.show()
             
             }}
-        />,
-      },
-      
-      {
-        roles: ['Telecommunications'],
-        component: <ListItem
-          key='8'
-          component={NavigationLink}
-          href='#'
-          onClick={this.props.store.adduser}
-          leftIcon={<FontIcon>record_voice_over</FontIcon>}
-          tileClassName='md-list-tile--mini'
-          primaryText={'Add User'}
         />,
       },
       {
@@ -252,8 +179,7 @@ export default class Dashboard extends PureComponent {
         mobileDrawerType={NavigationDrawer.DrawerTypes.TEMPORARY_MINI}
         tabletDrawerType={NavigationDrawer.DrawerTypes.PERSISTENT_MINI}
         desktopDrawerType={NavigationDrawer.DrawerTypes.PERSISTENT_MINI}
-        toolbarTitle='BC Telco Dashboard'
-        toolbarActions={closeButton}
+        toolbarTitle='Blockchain for Telco Dashboard'
       >
         {this.props.children}
       </NavigationDrawer>
