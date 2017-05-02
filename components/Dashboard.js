@@ -134,10 +134,10 @@ export default class Dashboard extends PureComponent {
     
 
     return <div>
-      <SkyLight dialogStyles = {{backgroundColor:'#FFFFFF',width:'95%',height:'500px',left: '28%', top:'50%',zIndex:999, position:'fixed'}} hideOnOverlayClicked ref="ViewPop" title={this.abctitle}>
+      <SkyLight dialogStyles = {{backgroundColor:'#FFFFFF',width:'95%',height:'500px',left: '28%', top:'50%',zIndex:999, position:'fixed',opacity: '0.93'}} hideOnOverlayClicked ref="ViewPop" title={this.abctitle}>
         {<ABC/>}
       </SkyLight>
-      <SkyLight dialogStyles = {{backgroundColor:'#FFFFFF',width:'95%',height:'500px',left: '28%', top:'50%',zIndex:999, position:'fixed'}} hideOnOverlayClicked ref="ViewPop2" title={this.xyztitle}>
+      <SkyLight dialogStyles = {{backgroundColor:'#FFFFFF',width:'95%',height:'500px',left: '28%', top:'50%',zIndex:999, position:'fixed',opacity: '0.93'}} hideOnOverlayClicked ref="ViewPop2" title={this.xyztitle}>
         {<XYZ/>}
         </SkyLight>
       <Head>

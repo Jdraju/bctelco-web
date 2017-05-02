@@ -16,6 +16,7 @@ class ABCView extends Component {
       <div
         style={{
           width: '98%'
+          
         }}>
         <h><b>Home Users</b></h>
         <CTable/>

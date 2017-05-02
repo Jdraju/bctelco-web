@@ -17,6 +17,7 @@ class Store {
   @observable dataXYZroam=[]
   @observable dataABCroam=[]
   @observable rs=[]
+  @observable msisdnreg=[]
   @observable mappt
   @observable maptrgt
   @observable mapptcolor1
@@ -40,6 +41,7 @@ class Store {
   @observable rs2screen
   @observable overage
   @observable screens={}
+  @observable msisdnlist={}
   
 
   
@@ -50,7 +52,7 @@ class Store {
 
    amantest2=()=>{
 
-       this.screens[this.maptrgt]='<button id="callout"> Call Out</button><button id="callend">Call End</button><p>MSIDN:1469xxxxxxx8</p>'
+       this.screens[this.maptrgt]='<button id="callout"> Call Out</button><button id="callend">Call End</button><p>MSIDN:'+this.msisdnlist[this.maptrgt]+'</p>'
   }
   amantest3=()=>{
 
@@ -59,20 +61,14 @@ class Store {
 
   overageyes=(rs)=>{
 
-    this.screens[this.maptrgt]='<button id="callout"> Call Out</button><button id="callend">Call End</button><p>MSIDN:1469xxxxxxx8</p>'
+    this.screens[this.maptrgt]='<button id="callout"> Call Out</button><button id="callend">Call End</button><p>MSIDN:'+this.msisdnlist[this.maptrgt]+'</p>'
 
   }
    overageno=(rs)=>{
 
-    this.screens[this.maptrgt]='<p>OVERAGE<\p>\n<p>MSIDN:1469xxxxxxx8</p>'
+    this.screens[this.maptrgt]='<p>OVERAGE<\p>\n<p>MSIDN:'+this.msisdnlist[this.maptrgt]+'</p>'
 
   }
-
-
-  setupcall=()=>{
-
-   this.usecase1(this.maptrgt,this.lat1,this.long1)
-}
 
   overageEnaDis=()=>{
     if(this.overage)
@@ -154,7 +150,7 @@ class Store {
   this.mapptcolor1='#3887be'
   this.mapptcolor8='#333333'
   this.mapptcolor8_1='#333333'
-  this.rs2screen='<button id="callout"> Call Out</button><button id="callend">Call End</button><p>MSIDN:1469xxxxxxx8</p>'
+  this.rs2screen='<button id="callout"> Call Out</button><button id="callend">Call End</button><p>MSIDN:'+this.msisdnlist[this.maptrgt]+'</p>'
   this.screens["rs1"]='<button id="callout"> Call Out</button><button id="callend">Call End</button><p>MSIDN:14691234567</p>'
   this.screens["rs2"]='<button id="callout"> Call Out</button><button id="callend">Call End</button><p>MSIDN:14691234568</p>'
   this.screens["rs3"]='<button id="callout"> Call Out</button><button id="callend">Call End</button><p>MSIDN:14691234569</p>'
@@ -240,8 +236,11 @@ class Store {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-   usecase1=async(rs,lt,lng)=>{
-     this.data=[]
+
+
+   usecase1_1=async(rs,lt,lng)=>{
+
+      this.data=[]
      this.lat=Math.round(lt * 100) / 100
      this.long=Math.round(lng * 100) / 100
      //https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&sensor=true&key=AIzaSyDa7v5iVlfBBPkyb5bdhb0rynjVZlyOoI0
@@ -309,6 +308,14 @@ class Store {
         data: JSON.stringify({key: rs}),
       })
      this.data = this.data.concat(JSON.parse(summaries.text));
+       
+   }
+
+
+
+
+   usecase1=async(rs)=>{
+
      this.data=this.data.concat({publickey: 'Block 2',msisdn: 'Authentiation'});
      let authenticate = await request
       .post('//bctelco-api.mybluemix.net/authentication')
@@ -353,7 +360,7 @@ class Store {
         data: JSON.stringify({key: rs}),
       })
      this.data = this.data.concat(JSON.parse(summaries3.text));
-     this.screens[this.maptrgt]='<button id="callout"> Call Out</button><button id="callend">Call End</button><p>MSIDN:1469xxxxxxx8</p>'
+     this.screens[this.maptrgt]='<button id="callout"> Call Out</button><button id="callend">Call End</button><p>MSIDN:'+this.msisdnlist[this.maptrgt]+'</p>'
     }
     else{
        this.mapptcolor8='#b30000'
@@ -609,13 +616,22 @@ adduser=async()=>{
   this.mapptcolor1='#3887be'
   this.mapptcolor8='#333333'
   this.mapptcolor8_1='#333333'
-  this.rs2screen='<button id="callout"> Call Out</button><button id="callend">Call End</button><p>MSIDN:1469xxxxxxx8</p>'
+  this.rs2screen='<button id="callout"> Call Out</button><button id="callend">Call End</button><p>MSIDN:'+this.msisdnlist[this.maptrgt]+'</p>'
   this.screens["rs1"]='<button id="callout"> Call Out</button><button id="callend">Call End</button><p>MSIDN:14691234567</p>'
   this.screens["rs2"]='<button id="callout"> Call Out</button><button id="callend">Call End</button><p>MSIDN:14691234568</p>'
   this.screens["rs3"]='<button id="callout"> Call Out</button><button id="callend">Call End</button><p>MSIDN:14691234569</p>'
   this.screens["rs4"]='<button id="callout"> Call Out</button><button id="callend">Call End</button><p>MSIDN:03097218855  </p>'
   this.screens["rs5"]='<button id="callout"> Call Out</button><button id="callend">Call End</button><p>MSIDN:349091234567</p>'
   this.screens["rs8"]='<button id="callout"> Call Out</button><button id="callend">Call End</button><p>MSIDN:14691234568</p>'
+
+  this.msisdnlist["rs1"]='14691234567'
+  this.msisdnlist["rs2"]='14691234568'
+  this.msisdnlist["rs3"]='14691234569'
+  this.msisdnlist["rs4"]='03097218855'
+  this.msisdnlist["rs5"]='349091234567'
+  this.msisdnlist["rs8"]='14691234568'
+
+
 
   this.inventory()
 
