@@ -70,17 +70,6 @@ export default class Dashboard extends PureComponent {
       {
         roles: ['Telecommunications'],
         component: <ListItem
-          key='0'
-          component={NavigationLink}
-          href='/'
-          leftIcon={<FontIcon>account_box</FontIcon>}
-          tileClassName='md-list-tile--mini'
-          primaryText={'Home'}
-        />,
-      },
-      {
-        roles: ['Telecommunications'],
-        component: <ListItem
           key='1'
           component={NavigationLink}
           href='#'

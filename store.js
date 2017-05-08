@@ -24,7 +24,7 @@ class Store {
   @observable mapptcolor8
   @observable mapptcolor1_1
   @observable mapptcolor8_1
-   @observable lat
+  @observable lat
   @observable long
   @observable lat1
   @observable long1
@@ -421,7 +421,7 @@ adduser=async()=>{
       this.lat8=30
       this.long8=-98
 
-      this.inventory2()
+      //this.inventory2()
 
    }
 
@@ -622,7 +622,7 @@ adduser=async()=>{
   this.screens["rs3"]='<button id="callout"> Call Out</button><button id="callend">Call End</button><p>MSIDN:14691234569</p>'
   this.screens["rs4"]='<button id="callout"> Call Out</button><button id="callend">Call End</button><p>MSIDN:03097218855  </p>'
   this.screens["rs5"]='<button id="callout"> Call Out</button><button id="callend">Call End</button><p>MSIDN:349091234567</p>'
-  this.screens["rs8"]='<button id="callout"> Call Out</button><button id="callend">Call End</button><p>MSIDN:14691234568</p>'
+  this.screens["rs8"]='<button id="reg" >Register</button>'
 
   this.msisdnlist["rs1"]='14691234567'
   this.msisdnlist["rs2"]='14691234568'
