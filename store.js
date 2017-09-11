@@ -12,8 +12,19 @@ class Store {
   @observable username = 'Broadcaster'
   @observable count
   @observable data=[]
+  @observable datain=[]
+  @observable transdata=[]
+  @observable transdata1=[]
+  @observable transdata2=[]
+  @observable transdata3=[]
+  @observable transdata4=[]
+  @observable transdata5=[]
   @observable dataXYZ=[]
   @observable dataABC=[]
+  @observable dataABCpayout=[]
+  @observable dataABCpayin=[]
+  @observable dataXYZpayout=[]
+  @observable dataXYZpayin=[]
   @observable dataXYZroam=[]
   @observable dataABCroam=[]
   @observable rs=[]
@@ -42,8 +53,17 @@ class Store {
   @observable overage
   @observable screens={}
   @observable msisdnlist={}
+  @observable visible=false;
   
 
+  
+showdiv=()=>{
+  if(this.visible){
+  this.visible=false;}
+  else{
+    this.visible=true;
+  }
+}
   
   amantest=(rs,lng,lt)=>{
   // alert(rs+" "+lng+" Aman "+lt);
@@ -122,16 +142,28 @@ class Store {
   
  resetInventory=async()=>{
     var d = [{}]
-   let summaries = await request
-      .post('//bctelco-api.mybluemix.net/resetInventory')
+    this.data=[]
+   let step1= await request
+      .post('http://172.27.12.44:3000/api/removeMSISDN')
       .type('form')
       .send({
-        data:JSON.stringify(d),
+        $class: "org.gsc.roaming.removeMSISDN",
+        noneed: "aa",
+        transactionId: "",
+        timestamp: "2017-08-10T17:08:49.284Z"
       })
-      let x = await request
-      .post('//bctelco-api.mybluemix.net/delayFunc')
+    let step2= await request
+      .post('http://172.27.12.44:3000/api/resetMSISDN')
       .type('form')
-      .send({})
+      .send({
+        $class: "org.gsc.roaming.resetMSISDN",
+        noneed: "aa",
+        transactionId: "",
+        timestamp: "2017-08-10T17:08:49.284Z"
+      })
+
+      let step3 = await request
+      .delete('http://172.27.12.44:3000/api/rs/rs8');
 
       this.lat1=-96.7970
     this.long1=32.7767
@@ -161,7 +193,7 @@ class Store {
  }
    
   inventory=async()=>{
-    this.data=[]
+    this.datain=[]
     this.dataXYZ=[]
     this.dataABC=[]
     this.dataXYZroam=[]
@@ -170,25 +202,22 @@ class Store {
     while(i<this.count)
     {
     let summaries = await request
-      .post('//bctelco-api.mybluemix.net/queryMSISDN')
-      .type('form')
-      .send({
-        data: JSON.stringify({key:this.rs[i]}),
-      })
-     this.data = this.data.concat(JSON.parse(summaries.text));
-     if(JSON.parse(summaries.text).ho=="XYZ")
+      .get('http://172.27.12.44:3000/api/rs/'+this.rs[i]);
+
+     this.datain = this.datain.concat(JSON.parse(summaries.text));
+     if(JSON.parse(summaries.text).ho=="resource:org.gsc.roaming.CSP#XYZ")
      {
        this.dataXYZ = this.dataXYZ.concat(JSON.parse(summaries.text));
      }
-     if(JSON.parse(summaries.text).ho=="ABC")
+     if(JSON.parse(summaries.text).ho=="resource:org.gsc.roaming.CSP#ABC")
      {
        this.dataABC = this.dataABC.concat(JSON.parse(summaries.text));
      }
-     if(JSON.parse(summaries.text).rp=="XYZ")
+     if(JSON.parse(summaries.text).rp=="resource:org.gsc.roaming.CSP#XYZ")
      {
        this.dataXYZroam = this.dataXYZroam.concat(JSON.parse(summaries.text));
      }
-      if(JSON.parse(summaries.text).rp=="ABC")
+      if(JSON.parse(summaries.text).rp=="resource:org.gsc.roaming.CSP#ABC")
      {
        this.dataABCroam = this.dataABCroam.concat(JSON.parse(summaries.text));
      }
@@ -199,6 +228,7 @@ class Store {
     }
 
     inventory2=async()=>{
+    this.datain=[]
     this.dataXYZ=[]
     this.dataABC=[]
     this.dataXYZroam=[]
@@ -207,24 +237,23 @@ class Store {
     while(i<this.count)
     {
     let summaries = await request
-      .post('//bctelco-api.mybluemix.net/queryMSISDN')
-      .type('form')
-      .send({
-        data: JSON.stringify({key:this.rs[i]}),
-      })
-     if(JSON.parse(summaries.text).ho=="XYZ")
+      .get('http://172.27.12.44:3000/api/rs/'+this.rs[i]);
+    
+      this.datain = this.datain.concat(JSON.parse(summaries.text));
+
+     if(JSON.parse(summaries.text).ho=="resource:org.gsc.roaming.CSP#XYZ")
      {
        this.dataXYZ = this.dataXYZ.concat(JSON.parse(summaries.text));
      }
-     if(JSON.parse(summaries.text).ho=="ABC")
+     if(JSON.parse(summaries.text).ho=="resource:org.gsc.roaming.CSP#ABC")
      {
        this.dataABC = this.dataABC.concat(JSON.parse(summaries.text));
      }
-     if(JSON.parse(summaries.text).rp=="XYZ")
+     if(JSON.parse(summaries.text).rp=="resource:org.gsc.roaming.CSP#XYZ")
      {
        this.dataXYZroam = this.dataXYZroam.concat(JSON.parse(summaries.text));
      }
-      if(JSON.parse(summaries.text).rp=="ABC")
+      if(JSON.parse(summaries.text).rp=="resource:org.gsc.roaming.CSP#ABC")
      {
        this.dataABCroam = this.dataABCroam.concat(JSON.parse(summaries.text));
      }
@@ -241,6 +270,11 @@ class Store {
    usecase1_1=async(rs,lt,lng)=>{
 
       this.data=[]
+      this.transdata=[]
+     this.transdata1=[]
+     this.transdata2=[]
+     this.transdata3=[]
+     this.transdata4=[]
      this.lat=Math.round(lt * 100) / 100
      this.long=Math.round(lng * 100) / 100
      //https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&sensor=true&key=AIzaSyDa7v5iVlfBBPkyb5bdhb0rynjVZlyOoI0
@@ -254,7 +288,7 @@ class Store {
 
       let i=0
       let country=""
-      let city=""
+      let city="  "
       while(i<JSON.parse(citydata.text).results[0].address_components.length)
       {
 
@@ -279,34 +313,37 @@ class Store {
      let rp=""
      if(country=="US")
        { 
-        rp=""}
+        rp="NA"}
      else
        { 
          rp="XYZ"}
      this.data=this.data.concat({publickey: 'Block 1',msisdn: 'Discovery'});
      let discover= await request
-      .post('//bctelco-api.mybluemix.net/discoverRP')
+      .post('http://172.27.12.44:3000/api/discovery')
       .type('form')
       .send({
-        data: JSON.stringify({ key: rs,
-                sp: rp,
-                loc: city,
-                lat: this.lat.toString(),
-                long: this.long.toString()}),
+        
+            $class: "org.gsc.roaming.discovery",
+            asset: rs,
+            rp: rp,
+            location: city,
+            lat: this.lat.toString(),
+            long: this.long.toString(),
+            transtype: "discovery",
+            transactionId: "",
+            timestamp: "2017-08-09T13:57:23.305Z"
       })
       console.log("test2", discover)
+
+      discover=JSON.parse(discover.text);
+      delete discover.$class;
+
+      this.transdata1[0]=this.transdata4.concat(discover);
+      this.transdata=this.transdata.concat({Block:'Block 1: Discovery',d:JSON.stringify(discover)});
       
-      let x = await request
-      .post('//bctelco-api.mybluemix.net/delayFunc')
-      .type('form')
-      .send({})
 
       let summaries = await request
-      .post('//bctelco-api.mybluemix.net/queryMSISDN')
-      .type('form')
-      .send({
-        data: JSON.stringify({key: rs}),
-      })
+      .get('http://172.27.12.44:3000/api/rs/'+rs);
      this.data = this.data.concat(JSON.parse(summaries.text));
        
    }
@@ -316,49 +353,66 @@ class Store {
 
    usecase1=async(rs)=>{
 
+     let hoinfo = await request
+      .get('http://172.27.12.44:3000/api/rs/'+rs);
+     let d= JSON.parse(hoinfo.text);
+     var rp= d.rp.split("#");
+
+
      this.data=this.data.concat({publickey: 'Block 2',msisdn: 'Authentiation'});
      let authenticate = await request
-      .post('//bctelco-api.mybluemix.net/authentication')
+      .post('http://172.27.12.44:3000/api/authentication')
       .type('form')
       .send({
-        data: JSON.stringify({key: rs}),
+        
+           $class: "org.gsc.roaming.authentication",
+           asset: rs,
+           rp: rp[1],
+           transtype: "authentication",
+           roaming: "True",
+           flag: "active",
+           transactionId: "",
+           timestamp: "2017-08-09T13:57:23.211Z"
+
       })
 
-      let y = await request
-      .post('//bctelco-api.mybluemix.net/delayFunc')
-      .type('form')
-      .send({})
+      authenticate=JSON.parse(authenticate.text);
+      delete authenticate.$class;
 
-     let summaries2 = await request
-      .post('//bctelco-api.mybluemix.net/queryMSISDN')
-      .type('form')
-      .send({
-        data: JSON.stringify({key: rs}),
-      })
+      this.transdata1[1]=this.transdata2.concat(authenticate);
+      this.transdata=this.transdata.concat({Block:'Block 2: Authentication',d:JSON.stringify(authenticate)});
+
+    let summaries2 = await request
+      .get('http://172.27.12.44:3000/api/rs/'+rs);
      this.data = this.data.concat(JSON.parse(summaries2.text));
 
    if(JSON.parse(summaries2.text).flag!="Fraud")
     {
      this.data=this.data.concat({publickey: 'Block 3',msisdn: 'Register'});
-   
+
      let updateRates= await request
-      .post('//bctelco-api.mybluemix.net/updateRates')
+      .post('http://172.27.12.44:3000/api/updaterate')
       .type('form')
       .send({
-        data: JSON.stringify({key: rs}),
+        
+            "$class": "org.gsc.roaming.updaterate",
+            "asset": rs,
+            "rp": rp[1],
+            "ratetype": "RoamingRate",
+            "transtype": "UpdateRates",
+            "transactionId": "",
+            "timestamp": "2017-08-09T13:57:23.434Z"
+
       })
 
-      let z = await request
-      .post('//bctelco-api.mybluemix.net/delayFunc')
-      .type('form')
-      .send({})
+      updateRates=JSON.parse(updateRates.text);
+      delete updateRates.$class;
+      
+      this.transdata1[2]=this.transdata3.concat(updateRates);
+      this.transdata=this.transdata.concat({Block:'Block 3: UpdateRates',d:JSON.stringify(updateRates)});
 
-      let summaries3 = await request
-      .post('//bctelco-api.mybluemix.net/queryMSISDN')
-      .type('form')
-      .send({
-        data: JSON.stringify({key: rs}),
-      })
+     let summaries3 = await request
+      .get('http://172.27.12.44:3000/api/rs/'+rs);
      this.data = this.data.concat(JSON.parse(summaries3.text));
      this.screens[this.maptrgt]='<button id="callout"> Call Out</button><button id="callend">Call End</button><p>MSIDN:'+this.msisdnlist[this.maptrgt]+'</p>'
     }
@@ -385,33 +439,34 @@ class Store {
 
 adduser=async()=>{
      this.data=[]
+     this.transdata=[]
+     this.transdata1=[]
+     this.transdata2=[]
+     this.transdata3=[]
+     this.transdata4=[]
      console.log("test1")
      this.data=this.data.concat({publickey: 'Block 1',msisdn: 'Add User'});
      let add= await request
-      .post('//bctelco-api.mybluemix.net/enterData')
+      .post('http://172.27.12.44:3000/api/addUser')
       .type('form')
       .send({
-        data: JSON.stringify({ key:"rs8",
-                msisdn:"14691234568", 
-                name:"A",
-                address:"DALLAS",
-                ho:"ABC",
-                lat:"32.942746",
-                long:"-96.994838"}),
+        
+         $class: "org.gsc.roaming.addUser",
+         noneed: "string",
+         transactionId: "",
+         timestamp: "2017-08-09T13:57:23.193Z"
+
       })
       console.log("test2", add)
-      
-      let x = await request
-      .post('//bctelco-api.mybluemix.net/delayFunc')
-      .type('form')
-      .send({})
+
+      add=JSON.parse(add.text);
+      delete add.$class;
+
+      this.transdata1[0]=this.transdata5.concat(add);
+      this.transdata=this.transdata.concat({Block:'Block 1: Add User',d:JSON.stringify(add)});
 
       let summaries = await request
-      .post('//bctelco-api.mybluemix.net/queryMSISDN')
-      .type('form')
-      .send({
-        data: JSON.stringify({key: 'rs8'}),
-      })
+      .get('http://172.27.12.44:3000/api/rs/rs8');
      this.data = this.data.concat(JSON.parse(summaries.text));
 
      this.rs[5]="rs8"
@@ -430,31 +485,44 @@ adduser=async()=>{
    usecase2_1=async(rs)=>{
      //alert("aman")
      this.data=[]
+     this.transdata=[]
+     this.transdata1=[]
+     this.transdata2=[]
+     this.transdata3=[]
+     this.transdata4=[]
      //alert("aman2")
      console.log("test1")
+
+     let hoinfo = await request
+      .get('http://172.27.12.44:3000/api/rs/'+rs);
+     let d= JSON.parse(hoinfo.text);
+     var rp= d.rp.split("#");
      
      this.data=this.data.concat({publickey: 'Block 1',msisdn: 'CallOut'});
      let callout= await request
-      .post('//bctelco-api.mybluemix.net/CallOut')
+      .post('http://172.27.12.44:3000/api/callout')
       .type('form')
       .send({
-        data: JSON.stringify({ key: rs,
-                sp: "XYZ",
-                destmsisdn: "14691234569"}),
+         $class: "org.gsc.roaming.callout",
+         asset: rs,
+         rp: rp[1],
+         destination: "4691234567",
+         transtype: "CallOut",
+         transactionId: "",
+         timestamp: "2017-08-10T17:08:49.296Z"
+
       })
       console.log("test2", callout)
+
+      callout=JSON.parse(callout.text);
+      delete callout.$class;
+
+      this.transdata1[0]=this.transdata5.concat(callout);
+      this.transdata=this.transdata.concat({Block:'Block 1: CallOut',d:JSON.stringify(callout)});
       
-      let x = await request
-      .post('//bctelco-api.mybluemix.net/delayFunc')
-      .type('form')
-      .send({})
 
       let summaries = await request
-      .post('//bctelco-api.mybluemix.net/queryMSISDN')
-      .type('form')
-      .send({
-        data: JSON.stringify({key: rs}),
-      })
+      .get('http://172.27.12.44:3000/api/rs/'+rs);
      this.data = this.data.concat(JSON.parse(summaries.text));
 
      this.inventory2()
@@ -464,53 +532,69 @@ adduser=async()=>{
     usecase2_1_1=async(rs)=>{
      //alert("aman")
      this.data=[]
+     this.transdata=[]
+     this.transdata1=[]
+     this.transdata2=[]
+     this.transdata3=[]
+     this.transdata4=[]
      //alert("aman2")
+
+     let hoinfo = await request
+      .get('http://172.27.12.44:3000/api/rs/'+rs);
+     let d= JSON.parse(hoinfo.text);
+     var rp= d.rp.split("#");
      console.log("overage")
 
     this.screens[this.maptrgt]='<p>You are over your usage limit and new call rate will be applied on the usage from this point.\n Do you want to continue.</p>\n<button id="overageyes">Yes</button><button id="overageno">No</button>'
 
      this.data=this.data.concat({publickey: 'Block 1',msisdn: 'CallOut'});
      let callout= await request
-      .post('//bctelco-api.mybluemix.net/CallOut')
+     .post('http://172.27.12.44:3000/api/callout')
       .type('form')
       .send({
-        data: JSON.stringify({ key: rs,
-                sp: "XYZ",
-                destmsisdn: "14691234569"}),
-      })
-      
-      let x = await request
-      .post('//bctelco-api.mybluemix.net/delayFunc')
-      .type('form')
-      .send({})
+         $class: "org.gsc.roaming.callout",
+         asset: rs,
+         rp: rp[1],
+         destination: "14691234567",
+         transtype: "CallOut",
+         transactionId: "",
+         timestamp: "2017-08-10T17:08:49.296Z"
 
-      let summaries = await request
-      .post('//bctelco-api.mybluemix.net/queryMSISDN')
-      .type('form')
-      .send({
-        data: JSON.stringify({key: rs}),
       })
+
+      callout=JSON.parse(callout.text);
+      delete callout.$class;
+
+      this.transdata1[0]=this.transdata5.concat(callout);
+      this.transdata=this.transdata.concat({Block:'Block 1: CallOut',d:JSON.stringify(callout)});
+
+       let summaries = await request
+      .get('http://172.27.12.44:3000/api/rs/'+rs);
      this.data = this.data.concat(JSON.parse(summaries.text));
 
      this.data=this.data.concat({publickey: 'Block 2',msisdn: 'Overage Check'});
      let overage = await request
-      .post('//bctelco-api.mybluemix.net/Overage')
+      .post('http://172.27.12.44:3000/api/overagecheck')
       .type('form')
       .send({
-        data: JSON.stringify({key: rs}),
+        
+         $class: "org.gsc.roaming.overagecheck",
+         asset: rs,
+         rp: rp[1],
+         transtype: "OverageCheck",
+         flag: "Overage",
+         transactionId: "",
+         timestamp: "2017-08-10T17:08:49.372Z",
       })
 
-      let y = await request
-      .post('//bctelco-api.mybluemix.net/delayFunc')
-      .type('form')
-      .send({})
+      overage=JSON.parse(overage.text);
+      delete overage.$class;
+
+      this.transdata1[1]=this.transdata2.concat(overage);
+      this.transdata=this.transdata.concat({Block:'Block 2: OverageCheck',d:JSON.stringify(overage)});
 
      let summaries2 = await request
-      .post('//bctelco-api.mybluemix.net/queryMSISDN')
-      .type('form')
-      .send({
-        data: JSON.stringify({key: rs}),
-      })
+      .get('http://172.27.12.44:3000/api/rs/'+rs);
      this.data = this.data.concat(JSON.parse(summaries2.text));
      
      this.inventory2()
@@ -519,29 +603,45 @@ adduser=async()=>{
 
    usecase2_2=async(rs)=>{
     
+     let hoinfo = await request
+      .get('http://172.27.12.44:3000/api/rs/'+rs);
+     let d= JSON.parse(hoinfo.text);
+     var rp= d.rp.split("#");
+
      if(!this.overage)
       {this.data=this.data.concat({publickey: 'Block 2',msisdn: 'Call End'});}
      else 
       {this.data=this.data.concat({publickey: 'Block 3',msisdn: 'Call End'});}
 
      let callend = await request
-      .post('//bctelco-api.mybluemix.net/CallEnd')
+      .post('http://172.27.12.44:3000/api/callend')
       .type('form')
       .send({
-        data: JSON.stringify({key: rs}),
+        $class: "org.gsc.roaming.callend",
+        asset: rs,
+        rp: rp[1],
+        duration: "5",
+        transtype: "CallEnd",
+        transactionId: "",
+        timestamp: "2017-08-10T17:08:49.284Z"
+
       })
 
-      let y = await request
-      .post('//bctelco-api.mybluemix.net/delayFunc')
-      .type('form')
-      .send({})
+      callend=JSON.parse(callend.text);
+      delete callend.$class;
+
+    
+      if(!this.overage)
+       {
+         this.transdata1[1]=this.transdata3.concat(callend);
+         this.transdata=this.transdata.concat({Block:'Block 2: CallEnd',d:JSON.stringify(callend)});}
+      else
+       {
+         this.transdata1[2]=this.transdata3.concat(callend);
+         this.transdata=this.transdata.concat({Block:'Block 3: CallEnd',d:JSON.stringify(callend)});}
 
      let summaries2 = await request
-      .post('//bctelco-api.mybluemix.net/queryMSISDN')
-      .type('form')
-      .send({
-        data: JSON.stringify({key: rs}),
-      })
+      .get('http://172.27.12.44:3000/api/rs/'+rs);
      this.data = this.data.concat(JSON.parse(summaries2.text));
 
      if(!this.overage)
@@ -549,25 +649,56 @@ adduser=async()=>{
      this.data=this.data.concat({publickey: 'Block 4',msisdn: 'Call Charges'});
 
      let callpay= await request
-      .post('//bctelco-api.mybluemix.net/CallPay')
+      .post('http://172.27.12.44:3000/api/callpay')
       .type('form')
       .send({
-        data: JSON.stringify({key: rs}),
+        $class: "org.gsc.roaming.callpay",
+        asset: rs,
+        rp: rp[1],
+        charges: "10",
+        transtype: "CallEnd",
+        transactionId: "",
+        timestamp: "2017-08-10T17:08:49.284Z"
       })
 
-      let z = await request
-      .post('//bctelco-api.mybluemix.net/delayFunc')
-      .type('form')
-      .send({})
+      callpay=JSON.parse(callpay.text);
+      delete callpay.$class;
 
-      let summaries3 = await request
-      .post('//bctelco-api.mybluemix.net/queryMSISDN')
-      .type('form')
-      .send({
-        data: JSON.stringify({key: rs}),
-      })
+      
+      if(!this.overage)
+       {
+         this.transdata1[2]=this.transdata4.concat(callpay);
+         this.transdata=this.transdata.concat({Block:'Block 3: CallPay',d:JSON.stringify(callpay)});}
+      else
+       {
+         this.transdata1[3]=this.transdata4.concat(callpay);
+         this.transdata=this.transdata.concat({Block:'Block 4: CallPay',d:JSON.stringify(callpay)});}
+   
+      
+     let summaries3 = await request
+      .get('http://172.27.12.44:3000/api/rs/'+rs);
      this.data = this.data.concat(JSON.parse(summaries3.text));
      this.data=this.data.concat({});
+    
+    
+ 
+    if(JSON.parse(summaries3.text).ho=="resource:org.gsc.roaming.CSP#XYZ")
+     {
+       this.dataXYZpayout=this.dataXYZpayout.concat({publickey:callpay.asset,rp:callpay.rp,transaction:callpay.transtype,charges:callpay.charges,transactionid:callpay.transactionId,timestamp:callpay.timestamp})
+     }
+     if(JSON.parse(summaries3.text).ho=="resource:org.gsc.roaming.CSP#ABC")
+     {
+       this.dataABCpayout=this.dataABCpayout.concat({publickey:callpay.asset,rp:callpay.rp,transaction:callpay.transtype,charges:callpay.charges,transactionid:callpay.transactionId,timestamp:callpay.timestamp})
+     }
+     if(JSON.parse(summaries3.text).rp=="resource:org.gsc.roaming.CSP#XYZ")
+     {
+       this.dataXYZpayin=this.dataXYZpayin.concat({publickey:callpay.asset,ho:JSON.parse(summaries3.text).ho,transaction:callpay.transtype,charges:callpay.charges,transactionid:callpay.transactionId,timestamp:callpay.timestamp})
+     }
+      if(JSON.parse(summaries3.text).rp=="resource:org.gsc.roaming.CSP#ABC")
+     {
+       this.dataABCpayin=this.dataABCpayin.concat({publickey:callpay.asset,ho:JSON.parse(summaries3.text).ho,transaction:callpay.transtype,charges:callpay.charges,transactionid:callpay.transactionId,timestamp:callpay.timestamp})
+     }
+
      }
       
      this.inventory2()

@@ -16,66 +16,38 @@ import TableColumn from 'react-md/lib/DataTables/TableColumn';
 //import ExpansionList from 'react-md/lib/ExpansionPanels/ExpansionList'
 //import SummaryForm from '../components/SummaryForm'
 
- 
 const columns = [
   {
     attribute: 'publicKey',
-    displayName: 'Public Key',
+    displayName: 'User',
     sortable: true 
   },
   {
-    attribute: 'msisdn',
-    displayName: 'MSISDN',
-    sortable: true
-  },
-  {
-    attribute: 'address',
-    displayName: 'Address',
-    sortable: true
-  },
-  {
     attribute: 'ho',
-    displayName: 'HO',
+    displayName: 'Partner',
     sortable: true
   },
   {
-    attribute: 'rp',
-    displayName: 'RP',
+    attribute: 'transaction',
+    displayName: 'Transaction',
     sortable: true
   },
   {
-    attribute: 'roaming',
-    displayName: 'Roaming',
+    attribute: 'charges',
+    displayName: 'Charges',
     sortable: true
   },
   {
-    attribute: 'location',
-    displayName: 'Location',
+    attribute: 'transactionid',
+    displayName: 'TransactionId',
     sortable: true
   },
   {
-    attribute: 'longitude',
-    displayName: 'longitude',
-    sortable: true
-  },
-  {
-    attribute: 'latitude',
-    displayName: 'Latitude',
-    sortable: true
-  },
-  {
-    attribute: 'rateType',
-    displayName: 'Rate Type',
-    sortable: true
-  },
-  
-  {
-    attribute: 'flag',
-    displayName: 'Flag',
+    attribute: 'timestamp',
+    displayName: 'TimeStamp',
     sortable: true
   }
 ]
-
 
 
 
@@ -96,32 +68,23 @@ export default class Tables extends Component{
 
 render(){
     //const {store} = this.props.store
-     //this.props.store.data.ho= this.props.store.data.ho.split("#")[1];
-    // this.props.store.data.rp= this.props.store.data.rp.split("#")[1];
-     const rows = this.props.store.data.map((row, i) => (
+    const rows = this.props.store.dataABCpayin.map((row, i) => (
       <TableRow key={i}>
         <TableColumn>{row.publickey}</TableColumn>
-        <TableColumn>{row.msisdn}</TableColumn>
-        <TableColumn>{row.address}</TableColumn>
         <TableColumn>{row.ho}</TableColumn>
-        <TableColumn>{row.rp}</TableColumn>
-        <TableColumn>{row.roaming}</TableColumn>
-        <TableColumn>{row.location}</TableColumn>
-        <TableColumn>{row.lat}</TableColumn>
-        <TableColumn>{row.long}</TableColumn>
-        <TableColumn>{row.ratetype}</TableColumn>
-        <TableColumn>{row.flag}</TableColumn>
+        <TableColumn>{row.transaction}</TableColumn>
+        <TableColumn>{row.charges}</TableColumn>
+        <TableColumn>{row.transactionid}</TableColumn>
+        <TableColumn>{row.timestamp}</TableColumn>
         
       </TableRow>
     ));
-
 
     const headers = columns.map((row, i) => (
       
         <TableColumn key={i}>{row.displayName}</TableColumn>
 
     ));
-   
 
     return (
       <DataTable plain>

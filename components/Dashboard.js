@@ -9,6 +9,7 @@ import FontIcon from 'react-md/lib/FontIcons'
 import ListItem from 'react-md/lib/Lists/ListItem'
 import NavigationDrawer from 'react-md/lib/NavigationDrawers'
 import SelectField from 'react-md/lib/SelectFields'
+import Inventory from '../components/TablesInv'
 import ABC from '../components/ABCView'
 import XYZ from '../components/XYZView'
 import SkyLight from 'react-skylight';
@@ -47,6 +48,11 @@ export default class Dashboard extends PureComponent {
       this.abctitle = "ABC View"
       this.skylightTitle = this.abctitle
   }
+
+  inventory(){
+     this.props.store.inventory;
+     this.refs.ViewPop3.show();
+  }
   
   render() {
    /* let skyLightContent = <ABC/>
@@ -73,7 +79,10 @@ export default class Dashboard extends PureComponent {
           key='1'
           component={NavigationLink}
           href='#'
-          onClick={this.props.store.inventory}
+          onClick={()=>{
+            this.props.store.inventory();
+            this.refs.ViewPop3.show();}
+          }
           leftIcon={<FontIcon>account_circle</FontIcon>}
           tileClassName='md-list-tile--mini'
           primaryText={'Inventory'}
@@ -116,13 +125,16 @@ export default class Dashboard extends PureComponent {
           onClick={this.props.store.resetInventory}
           leftIcon={<FontIcon>account_circle</FontIcon>}
           tileClassName='md-list-tile--mini'
-          primaryText={'Reset Inventory'}
+          primaryText={'Reset Demo'}
         />,
       }
     ]
     
 
     return <div>
+       <SkyLight dialogStyles = {{backgroundColor:'#FFFFFF',width:'95%',height:'500px',left: '28%', top:'50%',zIndex:999, position:'fixed',opacity: '0.93'}} hideOnOverlayClicked ref="ViewPop3" title="Inventory">
+        {<Inventory/>}
+      </SkyLight>
       <SkyLight dialogStyles = {{backgroundColor:'#FFFFFF',width:'95%',height:'500px',left: '28%', top:'50%',zIndex:999, position:'fixed',opacity: '0.93'}} hideOnOverlayClicked ref="ViewPop" title={this.abctitle}>
         {<ABC/>}
       </SkyLight>

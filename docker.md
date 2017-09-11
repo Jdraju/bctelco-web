@@ -33,7 +33,7 @@ docker push registry.ng.bluemix.net/registryname/image_name:image_tag
 ./build.sh
 
 # run locally
-docker run -p 3000:3000 -d gsc-adsales-web
+docker run -p 3000:3000 -d gsc-bctelco-web
 
 # initial cf container plugin
 cf ic init
@@ -45,10 +45,10 @@ docker images
 docker ps
 
 # tag image
-docker tag bb0117f24336 registry.ng.bluemix.net/gsc_jlp/adsales-web
+docker tag bb0117f24336 registry.ng.bluemix.net/gsc_jlp/bctelco-web
 
 # push
-docker push registry.ng.bluemix.net/gsc_jlp/adsales-web
+docker push registry.ng.bluemix.net/gsc_jlp/bctelco-web
 
 # list remote images
 cf ic images

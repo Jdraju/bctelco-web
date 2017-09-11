@@ -16,7 +16,6 @@ import TableColumn from 'react-md/lib/DataTables/TableColumn';
 //import ExpansionList from 'react-md/lib/ExpansionPanels/ExpansionList'
 //import SummaryForm from '../components/SummaryForm'
 
- 
 const columns = [
   {
     attribute: 'publicKey',
@@ -26,11 +25,6 @@ const columns = [
   {
     attribute: 'msisdn',
     displayName: 'MSISDN',
-    sortable: true
-  },
-  {
-    attribute: 'name',
-    displayName: 'Name',
     sortable: true
   },
   {
@@ -73,42 +67,14 @@ const columns = [
     displayName: 'Rate Type',
     sortable: true
   },
-  {
-    attribute: 'action',
-    displayName: 'Action',
-    sortable: true
-  },
-  {
-    attribute: 'transactionType',
-    displayName: 'Transaction Type',
-    sortable: true
-  },
-  {
-    attribute: 'destination',
-    displayName: 'Destination',
-    sortable: true
-  },
-  {
-    attribute: 'duration',
-    displayName: 'Duration',
-    sortable: true
-  },
-  {
-    attribute: 'charges',
-    displayName: 'Charges',
-    sortable: true
-  },
+  
   {
     attribute: 'flag',
     displayName: 'Flag',
     sortable: true
-  },
-  {
-    attribute: 'timestamp',
-    displayName: 'Timestamp',
-    sortable: true
-  },
+  }
 ]
+
 
 
 
@@ -134,7 +100,6 @@ render(){
       <TableRow key={i}>
         <TableColumn>{row.publickey}</TableColumn>
         <TableColumn>{row.msisdn}</TableColumn>
-        <TableColumn>{row.name}</TableColumn>
         <TableColumn>{row.address}</TableColumn>
         <TableColumn>{row.ho}</TableColumn>
         <TableColumn>{row.rp}</TableColumn>
@@ -143,14 +108,7 @@ render(){
         <TableColumn>{row.lat}</TableColumn>
         <TableColumn>{row.long}</TableColumn>
         <TableColumn>{row.ratetype}</TableColumn>
-        <TableColumn>{row.action}</TableColumn>
-        <TableColumn>{row.transtype}</TableColumn>
-        <TableColumn>{row.destination}</TableColumn>
-        <TableColumn>{row.duration}</TableColumn>
-        <TableColumn>{row.charges}</TableColumn>
         <TableColumn>{row.flag}</TableColumn>
-        <TableColumn>{row.timestamp}</TableColumn>
-
         
       </TableRow>
     ));

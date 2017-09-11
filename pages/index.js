@@ -1,13 +1,17 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import Head from 'next/head'
 import { Provider,observer } from 'mobx-react'
 import { initStore } from '../store'
 import Dashboard from '../components/Dashboard'
 import map from '../lib/map'
 import CTable from '../components/Tables'
+import CTable2 from '../components/TablesABC'
 import ABC from '../components/ABCView'
 import { ExpansionList, ExpansionPanel } from 'react-md/lib/ExpansionPanels';
-
+import ToggleDisplay from 'react-toggle-display';
+import Tabs from 'react-simpletabs';
+import JsonTable from 'react-json-table'
 @observer
 export default class Index extends React.Component {
 
@@ -29,8 +33,13 @@ export default class Index extends React.Component {
 
   render() {
 
+  
+
     return (<Provider store={this.store}>
     <Dashboard>
+       <Head>
+        <link rel='stylesheet' href='/static/tabstyle.css' />
+        </Head>
       <ExpansionList
       style={{
           width: '98%'
@@ -95,11 +104,39 @@ export default class Index extends React.Component {
           }}>
           </pre>
         </div>
-
-        <ExpansionPanel label="Data Table" defaultExpanded>
-          <CTable/>
-        </ExpansionPanel>
         
+       
+         <Tabs>
+        <Tabs.Panel title='Transactions'>
+
+         { 
+
+         this.store.transdata.map((row, i) => (
+
+             <ExpansionPanel key={i} label={row.Block} columnWidths={[6,6,6,6,6,6]}>
+              
+              <JsonTable rows={this.store.transdata1[i]} />
+           </ExpansionPanel>
+            
+         ))
+         }
+           
+            
+      
+
+        
+
+        </Tabs.Panel>
+
+        <Tabs.Panel title='Asset'>
+
+        <CTable/> 
+
+        </Tabs.Panel>
+      </Tabs>
+
+
+
       </ExpansionList>
 
 

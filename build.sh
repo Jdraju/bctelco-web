@@ -14,12 +14,12 @@ if [ ! -f .yarn-cache.tgz ]; then
   tar cvzf .yarn-cache.tgz --files-from /dev/null
 fi
 
-docker build . -t gsc-adsales-web
+docker build . -t gsc-bctelco-web
 
-docker run --rm --entrypoint cat gsc-adsales-web:latest /tmp/yarn.lock > /tmp/yarn.lock
+docker run --rm --entrypoint cat gsc-bctelco-web:latest /tmp/yarn.lock > /tmp/yarn.lock
 if ! diff -q yarn.lock /tmp/yarn.lock > /dev/null  2>&1; then
   echo "save yarn cache"
-  docker run --rm --entrypoint tar gsc-adsales-web:latest czf - /root/.yarn-cache/ > .yarn-cache.tgz
+  docker run --rm --entrypoint tar gsc-bctelco-web:latest czf - /root/.yarn-cache/ > .yarn-cache.tgz
   echo "save yarn.lock"
   cp /tmp/yarn.lock yarn.lock
 fi

@@ -81,7 +81,7 @@ const columns = [
 
 
 @inject('store') @observer
-export default class Tables extends Component{
+export default class TablesInv extends Component{
 
  constructor() {
    super()
@@ -98,7 +98,7 @@ render(){
     //const {store} = this.props.store
      //this.props.store.data.ho= this.props.store.data.ho.split("#")[1];
     // this.props.store.data.rp= this.props.store.data.rp.split("#")[1];
-     const rows = this.props.store.data.map((row, i) => (
+     const rows = this.props.store.datain.map((row, i) => (
       <TableRow key={i}>
         <TableColumn>{row.publickey}</TableColumn>
         <TableColumn>{row.msisdn}</TableColumn>
